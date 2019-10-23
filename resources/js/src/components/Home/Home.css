@@ -1,0 +1,16 @@
+@font-face {
+    font-family: SpotlightStencil;
+    src: url('./nasalization-rg.ttf');
+}
+
+.titulo-form-login{
+    font-family: SpotlightStencil;
+    color: rgb(2, 42, 94);
+}
+
+.paper-login{
+    background: rgb(235, 240, 240);
+    padding: 15px;
+    border: 3px solid rgb(32, 26, 82);
+    border-radius: 15px;
+}

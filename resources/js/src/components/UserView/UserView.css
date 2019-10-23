@@ -1,0 +1,114 @@
+@font-face{
+    font-family: nasalization;
+    src: url('nasalization-rg.ttf');
+}
+
+.fondo-perfil{
+    background-image: url('./imagenes/fondo.jpg');
+}
+
+.CajaNoticias{
+    border: 2px solid rgb(105, 90, 57);
+    padding: 15px;
+    width: 100%;
+    background: rgba(19, 19, 19, 0.699);
+}
+
+.CajaNoticias h1{
+    font-family: nasalization;
+    text-decoration: underline;
+    color: rgb(138, 117, 72);
+    
+}
+
+.CajaNoticias h2{
+    font-family: nasalization;
+    
+}
+
+.CajaNoticias p{
+    font-family: nasalization;
+    color: rgb(202, 199, 191);
+    
+}
+
+.CajaNoticias .old{
+    background: rgba(68, 56, 0, 0.7);
+    border: 2px solid rgb(48, 48, 48);
+    width: 100%;
+    padding: 15px;
+    margin: 10px;
+
+}
+.CajaNoticias .old>p{
+    color: rgb(202, 199, 191);
+}
+
+.CajaNoticias .old>h2{
+    color: rgb(122, 116, 102);
+}
+
+.CajaNoticias .old>small{
+    color: rgb(114, 114, 112);
+}
+
+.CajaNoticias .novedad{
+    background: rgba(226, 158, 30, 0.7);
+    width: 100%;
+    padding: 15px;
+    margin: 10px;
+    border: 2px solid rgba(255, 217, 0, 0.555);
+}
+.CajaNoticias .novedad>h2{
+    color: rgb(83, 35, 35);
+}
+.CajaNoticias .importante{
+    background: rgba(226, 43, 30, 0.7);
+    width: 100%;
+    padding: 15px;
+    margin: 10px;
+    border: 2px solid rgba(255, 40, 40, 0.438);
+}
+
+.CajaNoticias .importante>h2{
+    color: rgb(42, 33, 66);
+}
+.Puntos{
+    color: rgb(110, 100, 255);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.CajaEstado{
+    border: 2px solid rgb(105, 90, 57);
+    padding-top: 15px;
+    padding-right: 35px;
+    color: aliceblue;
+
+}
+
+.CajaEstado ul{
+    font-family: nasalization;
+    list-style: none;
+}
+
+.CajaLlave{
+    border: 2px solid rgb(39, 34, 22);
+    margin-bottom: 20px;
+    padding: 15px;
+    color: aliceblue;
+    width: 100%;
+    background-color: rgba(43, 43, 43, 0.644);
+
+}
+
+.CajaLlave li{
+    list-style: none;
+    margin-bottom: 5px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgba(1, 10, 59, 0.699);
+}
