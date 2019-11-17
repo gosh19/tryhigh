@@ -53,7 +53,6 @@ class FormCrearTorneoTft extends Component {
         })
         .then((response) => response.json())
         .then((info) => {
-            console.log(info);
             if(info.estado === 1){
                 swal(
                     <div>

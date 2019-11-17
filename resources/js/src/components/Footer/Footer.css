@@ -1,0 +1,11 @@
+.footer{
+    background: linear-gradient(90deg, rgb(66, 98, 156), rgb(17, 33, 87));
+    border-top: 3px solid white;
+    color: black;
+}
+
+.footer a{
+    font-weight: bolder;
+    font-size: 1rem;
+    color: rgb(1, 0, 51);
+}

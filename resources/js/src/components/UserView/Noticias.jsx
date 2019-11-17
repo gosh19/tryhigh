@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 class Noticias extends Component {
     constructor(props){
@@ -35,8 +35,10 @@ class Noticias extends Component {
 
                         return(
                             <div key={novedad.id}  className={novedad.categoria.tipo}>
-                                <h2>{novedad.titulo}</h2>
+                                <Typography variant="h2" noWrap>{novedad.titulo}</Typography>
+                                
                                 <p>{novedad.texto}</p>
+                                <hr />
                                 <small className="d-flex justify-content-end">{novedad.created_at}</small>
                             </div>
                         )

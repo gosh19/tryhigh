@@ -14,7 +14,7 @@ class LlaveController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -39,14 +39,48 @@ class LlaveController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * DEVUELVE LOS INSCRIPTOS DE UN TORNEO 
      *
      * @param  \App\Llave  $llave
      * @return \Illuminate\Http\Response
      */
-    public function show(Llave $llave)
+    public function show($torneo_id)
     {
-        //
+        $llaves = Llave::where([['torneo_id',$torneo_id], ['en_juego',1]])->get();
+
+            
+        $inscriptos_llave['estado'] = 0;
+
+        $i = 0;
+        foreach ($llaves as $llave) {
+            $inscriptos_llave['estado'] = 1;
+            $inscriptos_llave['llaves'][$i] = $llave;
+            $inscriptos_llave['datos'][$i] = \App\Inscripto::where('llave_id', $llave->id)->with('user')->with('partidas')->get();
+            $i++;
+        }
+
+        return $inscriptos_llave;
+
+    }
+
+    public function finalizarLlave($llave_id)
+    {
+        try {
+            $llave = Llave::find($llave_id);
+    
+            $llave->en_juego = false;
+            $llave->save();
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th];
+        }
+
+
+    }
+
+    public function pasaDeRonda(Request $request)
+    {
+        
     }
 
     /**

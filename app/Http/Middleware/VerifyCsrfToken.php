@@ -25,5 +25,6 @@ class VerifyCsrfToken extends Middleware
         'inscriptos',
         'categoria_novedads',
         'novedads',
+        '/aaa'
     ];
 }

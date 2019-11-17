@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   }
 });
 
+
 export default function CajaUser(props) {
   const classes = useStyles();
 
@@ -46,12 +47,10 @@ export default function CajaUser(props) {
           <Typography gutterBottom variant="h5" component="h2" >
             {props.nombreInvocador}
           </Typography>
+          <Typography gutterBottom variant="h5" component="h2" >
+            <strong>Nivel:</strong> {props.datosInvocador.summonerLevel}
+          </Typography>
           <img src="/images/escudo.png" width="50%" />
-          
-          
-          <div>
-            
-          </div>
         </CardContent>
         <ModalInscripcion 
           buttonValue={buttonValue}

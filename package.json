@@ -31,7 +31,10 @@
         "@material-ui/pickers": "^3.2.7",
         "@sweetalert/with-react": "^0.1.1",
         "date-fns": "^2.1.0",
+        "fs": "0.0.1-security",
+        "net": "^1.0.2",
         "react-swipeable-views": "^0.13.3",
-        "sweetalert": "^2.1.2"
+        "sweetalert": "^2.1.2",
+        "tls": "0.0.1"
     }
 }

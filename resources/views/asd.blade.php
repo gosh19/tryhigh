@@ -1,3 +1,6 @@
-<script src="{{ asset('js/app.js') }}" defer></script>
-<div id="root"></div>
+@extends('layouts.app')
+
+@section('content')
+<a href={{$preference->init_point}}>Pagar con Mercado Pago</a>
+@endsection
 

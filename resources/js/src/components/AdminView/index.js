@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PanelBotonesAdmin from './PanelBotonesAdmin';
 import PanelNoticias from './PanelNoticias';
+import Torneos from './Torneos';
 
 class AdminView extends Component {
     render() {
@@ -9,6 +10,8 @@ class AdminView extends Component {
             <div>
                 <PanelBotonesAdmin />
                 <PanelNoticias />
+                <hr />
+                <Torneos /> 
             </div>
         );
     }

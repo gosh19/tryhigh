@@ -6,6 +6,7 @@ import CajaUser from './CajaUser';
 import CajaNoticias from './CajaNoticias';
 import CajaEstado from './CajaEstado';
 import CajaLlave from './CajaLlave';
+import CajaAnuncios from './CajaAnuncios';
 import Puntos from './Puntos';
 import Footer from '../Footer';
 
@@ -16,22 +17,28 @@ class UserView extends Component {
             nombreInvocador: '',
             estadoRegistro: '',
             userId: '',
+            llaveId: '',
             partidasTerminadas: [],
             partidasNoTerminadas: [],
             CajaLlave: null,
+            datosInvocador: [],
         };
+
         this.mostrarCajaLlave = this.mostrarCajaLlave.bind(this);
         this.mostrarCajaEstado = this.mostrarCajaEstado.bind(this);
         this.verificarRegistro = this.verificarRegistro.bind(this);
         this.volver = this.volver.bind(this);
+        this.cargarSummoner = this.cargarSummoner.bind(this);
+
     }
 
     componentDidMount(){
         this.setState({
-            nombreInvocador: nombreInvocador,
-            userId: userId,
+            nombreInvocador: nombreInvocador, //ESTE DATO Y USERID LOS TRAIGO DE LA VISTA DE PHP
+            userId: userId,                   //EN FORMA DE SCRIPT Y VARIABLE GLOBAL. VER LA VISTA DONDE RENDERIZO ESTO PARA MAS INFO
         });
         this.verificarRegistro(userId);
+        this.cargarSummoner(nombreInvocador);
     }
 
     verificarRegistro(id){
@@ -53,8 +60,29 @@ class UserView extends Component {
                             }
                     })
                 );   
-            this.setState({estadoRegistro: inscriptos.estado})
+            this.setState({
+                estadoRegistro: inscriptos.estado,
+                llaveId: inscriptos.datos.llave_id,
+            })
         });     
+    }
+
+    cargarSummoner(){
+        try {
+            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nombreInvocador+'?api_key=RGAPI-4e54510d-cbd1-4fce-b8f8-5d0a2549b70e')
+            .then(response => response.json())
+            .then(info => {
+                this.setState((state, props) =>{
+                    console.log(info);
+                    
+                    return{
+                        datosInvocador: info,
+                    }
+                })
+            })
+        } catch (error) {
+            
+        }
     }
 /**
  * si esta registrado muestra la caja llave
@@ -63,7 +91,9 @@ class UserView extends Component {
     mostrarCajaLlave(){
         if(this.state.estadoRegistro ==1){             
             return (<CajaLlave 
+                        userId={this.state.userId}
                         nombreInvocador= {this.state.nombreInvocador}
+                        llaveId={this.state.llaveId}
                     />)
         }else{
             return null;
@@ -112,6 +142,7 @@ class UserView extends Component {
                             nombreInvocador={this.state.nombreInvocador}
                             estadoRegistro = {this.state.estadoRegistro}
                             userId={this.state.userId}
+                            datosInvocador={this.state.datosInvocador}
                         />
                         <Puntos />
                         {this.mostrarCajaEstado()}
@@ -132,6 +163,7 @@ class UserView extends Component {
                     >
                         {this.mostrarCajaLlave()}
                         <CajaNoticias />
+                        <CajaAnuncios />
                     </Grid>
                 </Grid>
             </div>

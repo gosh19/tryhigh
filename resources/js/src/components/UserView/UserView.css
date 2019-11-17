@@ -3,6 +3,7 @@
     src: url('nasalization-rg.ttf');
 }
 
+
 .fondo-perfil{
     background-image: url('./imagenes/fondo.jpg');
 }
@@ -23,7 +24,7 @@
 
 .CajaNoticias h2{
     font-family: nasalization;
-    
+    font-size: 2.5rem;
 }
 
 .CajaNoticias p{
@@ -111,4 +112,33 @@
     border: 1px solid white;
     border-radius: 10px;
     background-color: rgba(1, 10, 59, 0.699);
+}
+
+.CajaLlave h1{
+    font-family: nasalization;
+    text-decoration-line: underline;
+    margin-bottom: 1.5rem;
+}
+
+.link-llave{
+    margin-left: 1rem;
+}
+
+.img-anuncio{
+    border: 2px solid rgb(146, 99, 10);
+    
+
+}
+
+.modal-inscripcion{
+    background: linear-gradient(45deg, rgb(77, 52, 0), rgb(216, 148, 0));
+}
+
+.modal-inscripcion h2{
+    font-family: nasalization;
+    color: rgb(59, 27, 1);
+}
+
+.torneo{
+    border: 1px solid black;
 }

@@ -48,7 +48,23 @@ class TorneoTftController extends Controller
         }
         
     }
+    /**
+     * PONE EL VALOR DE EN_JUEGO EN 1 PARA DAR INICIO LOGICO XD
+     */
+    public function iniciarTorneo($id)
+    {
+        try {
+            $torneo = TorneoTft::find($id);
 
+            $torneo->en_juego = 1;
+            $torneo->save();
+
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 1, 'error' => $th];
+        }
+        
+    }
     /**
      * Display the specified resource.
      *

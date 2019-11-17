@@ -15,7 +15,7 @@ class AddColumnEstadoToTonreoTftsTable extends Migration
     {
         Schema::table('torneo_tfts', function (Blueprint $table) {
             $table->boolean('abierto')->nullable()->default(true);
-            $table->boolean('en_juego')->nullable()->default(true);
+            $table->boolean('en_juego')->nullable()->default(false);
         });
     }
 

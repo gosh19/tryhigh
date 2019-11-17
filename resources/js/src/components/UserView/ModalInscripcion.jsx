@@ -5,6 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Button } from '@material-ui/core';
 
+import swal from '@sweetalert/with-react';
+
 const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
@@ -12,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   paper: {
-    backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -36,7 +37,33 @@ function inscribirme(userId, torneoId) {
         body: JSON.stringify(data)
     })
     .then(response => response.json())
-    .then(info => console.log(info));  
+    .then(info => {
+        if(info.estado === 1){
+          swal(
+              <div>
+                <h1>Registrado con exito</h1>
+              </div>
+            ,{
+              icon: "success",
+              button: {
+                  text: "Ok",                       
+              }
+            });
+            location.reload();
+      }
+      else{
+          swal(
+              <div>
+                <h1>Error al registrarse</h1>
+              </div>
+            ,{
+              icon: "error",
+              button: {
+                  text: "Salir",               
+              }
+            });
+      }
+    });  
 }
 
 export default function ModalInscripcion(props) {
@@ -81,14 +108,15 @@ export default function ModalInscripcion(props) {
         }}
       >
         <Fade in={open}>
+          <div className="modal-inscripcion">
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Selecciona el torneo al que quieres inscribirte</h2>
+            <hr />
             {torneos.map(torneo =>{
                 return(
-                    <ul key={torneo.id}>
-                        <li>{torneo.id}</li>
-                        <li>{torneo.nombre}</li>
-                        <li>{torneo.fecha_inicio}</li>
+                    <div key={torneo.id} className="toneo">
+                        <h3>{torneo.nombre}</h3>
+                        <h5>Fecha de inicio: {torneo.fecha_inicio}</h5>
                         <Button 
                             type="button"
                             color="primary"
@@ -97,9 +125,10 @@ export default function ModalInscripcion(props) {
                         >
                             Inscribirme
                         </Button>
-                    </ul>
+                    </div>
                 )
             })}
+          </div>
           </div>
         </Fade>
       </Modal>

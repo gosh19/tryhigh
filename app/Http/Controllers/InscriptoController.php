@@ -31,7 +31,7 @@ class InscriptoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * INSCRIPCION AL TORNEO CORRESPONDIENTE
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -39,14 +39,14 @@ class InscriptoController extends Controller
     public function store(Request $request)
     {
         try {
-            $llave = Llave::where('torneo_id', $request->torneo_id)->get();
+            $llave = Llave::where([['torneo_id', $request->torneo_id], ['ronda', 1]])->get();
 
             $llave = last($llave);
             if($llave != []){
 
                 $llave = $llave[0];
             }
-            //SI NO HAY NINGUNA LLAVE LA CREO
+            //SI NO HAY NINGUNA LLAVE LA CREO O ESTA LLENA 
             if (($llave == [] ) || ($llave->cant_jugadores == 8)) {
                 $llave = new Llave;
                 $llave->torneo_id = $request->torneo_id;
@@ -60,8 +60,22 @@ class InscriptoController extends Controller
                 $inscripto->llave_id = $llave->id;
                 $inscripto->save();
 
+                //CARGO EL ++ EN CANTIDAD DE JUGADORES DE LA LLAVE
                 $llave->cant_jugadores++;
                 $llave->save();
+
+                //CREO PARTIDA EN ESTADO PENDIENTE
+                $partida = new \App\Partida;
+                $partida->user_id = $request->user_id;
+                $partida->llave_id = $llave->id;
+                $partida->estado = 'pendiente';
+
+                //BUSCO LA FECHA DE INICIO DEL TORNEO PARA PONER LA FECHA DE LA PRIMER PARTIDA
+                $torneo = \App\TorneoTft::find($request->torneo_id);
+
+                $partida->fecha = $torneo->fecha_inicio;
+
+                $partida->save();
             
             return ['estado' => 1];
         } catch (\Throwable $th) {
@@ -84,8 +98,24 @@ class InscriptoController extends Controller
             return ['estado' => 0];
         }
         else{
-            return ['estado' => 1];
+            return ['estado' => 1, 'datos' => $ins];
         }
+    }
+    /**
+     * DEVUELVE LAS LLAVES DEL TORENO CON LOS USER SI ESTA ACTIVO
+     */
+    public function llave($llave_id)
+    {
+        $llave = Inscripto::where('llave_id', $llave_id)->with('user')->with('llave')->get();
+
+        $torneo = \App\TorneoTft::find($llave[0]->torneo_id);
+
+        if ($torneo->en_juego == 1) {
+            return ['estado' => 1, 'llave' => $llave];
+        }else{
+            return ['estado' => 0];
+        }
+       
     }
 
     /**

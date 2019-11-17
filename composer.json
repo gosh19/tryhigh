@@ -12,7 +12,8 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "mercadopago/dx-php": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -34,7 +35,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "MP\\": "MP/"
         },
         "classmap": [
             "database/seeds",

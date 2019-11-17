@@ -11,4 +11,18 @@ class Inscripto extends Model
     ];
 
     protected $primaryKey = "user_id";
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    public function llave()
+    {
+        return $this->hasOne('App\Llave','id','llave_id');
+    }
+    public function partidas()
+    {
+        return $this->hasMany('App\Partida', 'user_id', 'user_id');
+    }
+
 }

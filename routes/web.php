@@ -25,8 +25,9 @@ Route::resources([
     'partidas' => 'PartidaController',
     'categoria_novedads' => 'CategoriaNovedadController',
     'novedads' => 'NovedadController',
+    'llaves' => 'LlaveController',
 ]);
-Route::get('/inscriptos.show', 'InscriptoController@show');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -36,9 +37,21 @@ Route::middleware('auth')->group(function(){
     Route::get('/UserView' , function(){
         return view('User.UserView')->with('user', Auth::user());
     });
-
+    
 });
 
 Route::get('/AdminView' , function(){
     return view('Admin.AdminView');
 });
+
+Route::get('/aaa' , 'MercadoPagoController@verPago');
+Route::get('/a' , 'MercadoPagoController@linkPago');
+
+Route::get('finalizarLlave/{llave_id}', 'LlaveController@finalizarLlave');
+
+Route::get('partidas/pasa/{id}','PartidaController@pasaDeRonda');
+
+Route::get('torneo_tfts/iniciar/{id}', 'TorneoTftController@iniciarTorneo');
+
+Route::get('inscriptos/llaves/{llave_id}', 'InscriptoController@llave');
+Route::get('/inscriptos.show', 'InscriptoController@show');
