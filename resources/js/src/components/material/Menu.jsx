@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 
 import Home from '../Home';
 import Inscripcion from '../Inscripcion';
+import Nosotros from '../Nosotros';
 
 import './menu.css';
 
@@ -96,7 +97,7 @@ export default function FullWidthTabs() {
         <Inscripcion />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <Nosotros />
         </TabPanel>
       </SwipeableViews>
     </div>
