@@ -48,7 +48,7 @@ export default function CajaUser(props) {
             {props.nombreInvocador}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2" >
-            <strong>Nivel:</strong> {props.datosInvocador.summonerLevel}
+            {/*<strong>Nivel:</strong> {props.datosInvocador.summonerLevel} ESTA WEA ES PARA CUANDO RESUELVA LA API DEL LOL*/}
           </Typography>
           <img src="/images/escudo.png" width="50%" />
         </CardContent>
