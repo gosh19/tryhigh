@@ -119,7 +119,7 @@ class UserView extends Component {
 
     render() {
         return (
-            <div>
+            <div className="fondo-negro">
 
 
             <div className="fondo-perfil p-5">  
