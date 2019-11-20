@@ -36,14 +36,6 @@ export default function ImgMediaCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Ver mas
-        </Button>
-        <Button size="small" color="primary">
-          Inscribirme
-        </Button>
-      </CardActions>
     </Card>
   );
 }
