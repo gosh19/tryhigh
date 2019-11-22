@@ -54,7 +54,7 @@ class Home extends Component {
                             title="Team Figth Tactics" 
                             img="https://esports.eldesmarque.com/wp-content/uploads/2019/08/teamfight_tactics.6.jpg"
                             h1="Team Figth Tactics"
-                            text="Preparate para el primer torneo de TFT de la argentina. ¡Planifica tu formacion y preparate para enfrentar a tu rivales!"
+                            text="Preparate para el primer torneo de TFT de Latinoameria. ¡Planifica tu formacion y preparate para enfrentar a tu rivales!"
                         />
                     </Grid>
                     <Grid
@@ -71,7 +71,7 @@ class Home extends Component {
                             style={{fontSize: '2em'}} 
                             className="btn btn-block btn-danger p-3"
                             onClick={this.props.funcIns}
-                        >¡Inscribirme!</button>
+                        >¡Registrarme!</button>
                         <button 
                             type="button" 
                             style={{fontSize: '2em'}} 

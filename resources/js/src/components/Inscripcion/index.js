@@ -123,7 +123,7 @@ class Inscripcion extends Component {
                             sm={4}
                             className="bg-light p-5 rounded"
                         >   
-                            <h1>Inscripcion!</h1>
+                            <h1>¡Registro!</h1>
                                 <TextField
                                     id="standard-multiline-flexible"
                                     name="name"

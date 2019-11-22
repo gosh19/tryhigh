@@ -78,7 +78,7 @@ export default function FullWidthTabs() {
           aria-label="full width tabs example"
         >
           <Tab label="Inicio" {...a11yProps(0)} />
-          <Tab label="Inscripcion" {...a11yProps(1)} />
+          <Tab label="Registro" {...a11yProps(1)} />
           <Tab label="Nosotros" {...a11yProps(2)} />
         </Tabs>
       </AppBar>

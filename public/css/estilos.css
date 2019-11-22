@@ -1,0 +1,13 @@
+body{
+    background: url('/images/fondo-login.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: black;
+    padding: 50px;
+}
+
+.login{
+    opacity: 0.9;
+}
+
+
