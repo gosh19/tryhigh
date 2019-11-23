@@ -84,6 +84,37 @@ export default function ModalInscripcion(props) {
     .then(info => torneos = info
     );
 
+    function renderTorneos() {
+      
+      if (torneos.length != 0) {
+        return  torneos.map(torneo =>{
+              
+          return(
+              <div key={torneo.id} className="toneo">
+                  <h3>{torneo.nombre}</h3>
+                  <h5>Fecha de inicio: {torneo.fecha_inicio}</h5>
+                  <Button 
+                      type="button"
+                      color="primary"
+                      variant="contained"
+                      onClick ={() => inscribirme(props.userId, torneo.id)}
+                  >
+                      Inscribirme
+                  </Button>
+              </div>
+          )
+      });
+      }
+      else{
+        return <div
+                className="alert-warning text-bold m-3 p-3 d-flex justify-content-center rounded border border-warning"
+                >
+                  Inscripciones abiertas pronto!</div>
+      }
+      
+    }
+    
+
     return (
     <div>
       <Button
@@ -112,22 +143,7 @@ export default function ModalInscripcion(props) {
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Selecciona el torneo al que quieres inscribirte</h2>
             <hr />
-            {torneos.map(torneo =>{
-                return(
-                    <div key={torneo.id} className="toneo">
-                        <h3>{torneo.nombre}</h3>
-                        <h5>Fecha de inicio: {torneo.fecha_inicio}</h5>
-                        <Button 
-                            type="button"
-                            color="primary"
-                            variant="contained"
-                            onClick ={() => inscribirme(props.userId, torneo.id)}
-                        >
-                            Inscribirme
-                        </Button>
-                    </div>
-                )
-            })}
+            {renderTorneos()}
           </div>
           </div>
         </Fade>
