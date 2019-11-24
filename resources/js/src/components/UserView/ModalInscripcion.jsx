@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 
 import swal from '@sweetalert/with-react';
 
+
 const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
@@ -90,12 +91,12 @@ export default function ModalInscripcion(props) {
         return  torneos.map(torneo =>{
               
           return(
-              <div key={torneo.id} className="toneo">
+              <div key={torneo.id} className="torneo">
                   <h3>{torneo.nombre}</h3>
                   <h5>Fecha de inicio: {torneo.fecha_inicio}</h5>
                   <Button 
                       type="button"
-                      color="primary"
+                      color="secondary"
                       variant="contained"
                       onClick ={() => inscribirme(props.userId, torneo.id)}
                   >
@@ -107,9 +108,9 @@ export default function ModalInscripcion(props) {
       }
       else{
         return <div
-                className="alert-warning text-bold m-3 p-3 d-flex justify-content-center rounded border border-warning"
+                className="alert-warning font-weight-bold m-3 p-3 d-flex justify-content-center rounded border border-warning"
                 >
-                  Inscripciones abiertas pronto!</div>
+                  Inscripciones abiertas entre el 24/11 y el 26/11</div>
       }
       
     }

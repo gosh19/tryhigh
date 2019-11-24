@@ -134,7 +134,7 @@
 }
 
 .modal-inscripcion{
-    background: linear-gradient(45deg, rgb(77, 52, 0), rgb(216, 148, 0));
+    background: linear-gradient(45deg, rgb(78, 32, 20), rgb(223, 93, 60));
 }
 
 .modal-inscripcion h2{
@@ -144,4 +144,8 @@
 
 .torneo{
     border: 1px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    color: rgb(187, 172, 172);
+    background: linear-gradient(45deg, rgb(78, 18, 0), rgb(250, 58, 0));
 }

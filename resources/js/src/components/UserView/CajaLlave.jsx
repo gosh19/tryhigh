@@ -23,7 +23,10 @@ class CajaLlave extends Component {
         try {
             fetch('inscriptos/llaves/'+this.props.llaveId)
             .then(response => response.json())
-            .then(info => {                
+            .then(info => {     
+
+                const ronda = info.llave[0].llave.ronda;
+
                 this.setState((state, props) => {                    
                     if(info.estado == 1){
                         
@@ -33,7 +36,7 @@ class CajaLlave extends Component {
                         }
                         return{
                             inscriptos1: info.llave,
-                            ronda: 'RONDA NUMERO '+info.llave[0].llave.ronda,
+                            ronda: 'RONDA NUMERO '+ronda,
                         }
                     }else{
                         info.llave = [];
@@ -45,6 +48,7 @@ class CajaLlave extends Component {
                        
                         return{
                             inscriptos1: info.llave,
+                            ronda: 'RONDA NUMERO '+ronda,
                         }
                     }
                 })
