@@ -43,12 +43,22 @@ class InscriptoController extends Controller
 
             $cantidad_llaves = count($llave);
 
-            $llave = last($llave);
-            
-            if($llave != []){
+            $llaves = last($llave);
 
-                $llave = $llave[0];
+            //SI HAY LLAVES CREADAS ME FIJO CUAL ESTA LIBRE APRA INSCRIPCION
+            if($llaves != []){
+
+                foreach ($llaves as $ll) {
+                   
+                    if ($ll->cant_jugadores < 8) {
+                        $llave = $ll;
+                        break;
+                    }
+
+                }
+                
             }
+
             //SI NO HAY NINGUNA LLAVE O ESTA LLENA LA CREO. ADEMAS SE FIJA Q NO0 HAYA MAS DE 4 LLAVES
             //TODO HAY Q HYACER ESE 4 VARIABLE
             if (($llave == [] ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
@@ -62,7 +72,7 @@ class InscriptoController extends Controller
             //ME FIJO SI LA LLAVE QUE VOY A USAR ESTA COMPLETA O NO
             //SI ESTA COMPLETA NO INSCRIBO AL QLIO
             if ($llave->cant_jugadores == 8) {
-                return ['estado' => 0, 'mensaje' => 'torneo completo'];
+                return ['estado' => 0, 'mensaje' => 'Torneo completo!', 'llave' => $llave];
             }
 
             //SI LA LLAVE TIENE ESPACIO DISPONIBLE SE INSCRIBE EL QLIO

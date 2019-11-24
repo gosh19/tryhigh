@@ -39,6 +39,8 @@ function inscribirme(userId, torneoId) {
     })
     .then(response => response.json())
     .then(info => {
+      console.log(info);
+      
         if(info.estado === 1){
           swal(
               <div>
@@ -55,7 +57,8 @@ function inscribirme(userId, torneoId) {
       else{
           swal(
               <div>
-                <h1>Error al registrarse</h1>
+                <h2>Error al registrarse</h2>
+          <h1>{info.mensaje}</h1>
               </div>
             ,{
               icon: "error",
