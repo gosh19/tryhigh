@@ -48,52 +48,56 @@ class InscriptoController extends Controller
             if($llaves != []){
                 foreach ($llaves as $ll) {  
                     if ($ll->cant_jugadores < 8) {
-                        $llave = $ll;
                         
-                        break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
-                    }
-                }     
-            }
-            //SI NO HAY NINGUNA LLAVE O ESTA LLENA LA CREO. ADEMAS SE FIJA Q NO0 HAYA MAS DE 4 LLAVES
-            //TODO HAY Q HYACER ESE 4 VARIABLE
-            if (($cantidad_llaves == 0 ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
-                $llave = new Llave;
-                $llave->torneo_id = $request->torneo_id;
-                $llave->ronda = 1;
-                $llave->cant_jugadores =0;
-                $llave->save();
-            }
-
-            //ME FIJO SI LA LLAVE QUE VOY A USAR ESTA COMPLETA O NO
-            //SI ESTA COMPLETA NO INSCRIBO AL QLIO
-            if ($llave->cant_jugadores == 8) {
-                return ['estado' => 0, 'mensaje' => 'Torneo completo!', 'llave' => $llave];
-            }
-
-            //SI LA LLAVE TIENE ESPACIO DISPONIBLE SE INSCRIBE EL QLIO
-                $inscripto = new Inscripto;
-                $inscripto->user_id = $request->user_id;
-                $inscripto->torneo_id = $request->torneo_id;
-                $inscripto->llave_id = $llave->id;
-                $inscripto->save();
-
-                //CARGO EL ++ EN CANTIDAD DE JUGADORES DE LA LLAVE
-                $llave->cant_jugadores++;
-                $llave->save();
-
-                //CREO PARTIDA EN ESTADO PENDIENTE
-                $partida = new \App\Partida;
-                $partida->user_id = $request->user_id;
-                $partida->llave_id = $llave->id;
-                $partida->estado = 'pendiente';
-
-                //BUSCO LA FECHA DE INICIO DEL TORNEO PARA PONER LA FECHA DE LA PRIMER PARTIDA
-                $torneo = \App\TorneoTft::find($request->torneo_id);
-
-                $partida->fecha = $torneo->fecha_inicio;
-
-                $partida->save();
-            
+                        $llave = $ll;     
+                    break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
+                }
+                
+                $llave->cant_jugadores = 8;
+            }     
+        }
+        
+        //SI NO HAY NINGUNA LLAVE O ESTA LLENA LA CREO. ADEMAS SE FIJA Q NO0 HAYA MAS DE 4 LLAVES
+        //TODO HAY Q HYACER ESE 4 VARIABLE
+        if (($cantidad_llaves == 0 ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
+            $llave = new Llave;
+            $llave->torneo_id = $request->torneo_id;
+            $llave->ronda = 1;
+            $llave->cant_jugadores =0;
+            $llave->save();
+        }
+        
+        //ME FIJO SI LA LLAVE QUE VOY A USAR ESTA COMPLETA O NO
+        //SI ESTA COMPLETA NO INSCRIBO AL QLIO
+        if ($llave->cant_jugadores == 8) {
+            return ['estado' => 0, 'mensaje' => 'Torneo completo!', 'llave' => $llave];
+        }
+        
+        //SI LA LLAVE TIENE ESPACIO DISPONIBLE SE INSCRIBE EL QLIO
+        $inscripto = new Inscripto;
+        $inscripto->user_id = $request->user_id;
+        $inscripto->torneo_id = $request->torneo_id;
+        $inscripto->llave_id = $llave->id;
+        $inscripto->save();
+        
+        //CARGO EL ++ EN CANTIDAD DE JUGADORES DE LA LLAVE
+        $llave->cant_jugadores++;
+        $llave->save();
+        
+        //CREO PARTIDA EN ESTADO PENDIENTE
+        $partida = new \App\Partida;
+        $partida->user_id = $request->user_id;
+        $partida->llave_id = $llave->id;
+        $partida->estado = 'pendiente';
+        
+        //BUSCO LA FECHA DE INICIO DEL TORNEO PARA PONER LA FECHA DE LA PRIMER PARTIDA
+        $torneo = \App\TorneoTft::find($request->torneo_id);
+        
+        $partida->fecha = $torneo->fecha_inicio;
+        
+        $partida->save();
+        
+        
             return ['estado' => 1, 'mensaje' => 'Inscripto con exito'];
         } catch (\Throwable $th) {
             return $th;
