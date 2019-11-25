@@ -53,7 +53,7 @@ class InscriptoController extends Controller
                     break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
                 }
                 
-                $llave->cant_jugadores = 8;
+                
             }     
         }
         
