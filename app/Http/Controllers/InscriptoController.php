@@ -50,10 +50,10 @@ class InscriptoController extends Controller
                     if ($ll->cant_jugadores < 8) {
                         
                         $llave = $ll;     
-                    break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
-                }
+                        break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
+                    }
                 
-                
+                $llave->cant_jugadores = 8;
             }     
         }
         
