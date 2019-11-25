@@ -44,24 +44,19 @@ class InscriptoController extends Controller
             $cantidad_llaves = count($llave);
 
             $llaves = last($llave);
-
             //SI HAY LLAVES CREADAS ME FIJO CUAL ESTA LIBRE APRA INSCRIPCION
             if($llaves != []){
-
-                foreach ($llaves as $ll) {
-                   
+                foreach ($llaves as $ll) {  
                     if ($ll->cant_jugadores < 8) {
                         $llave = $ll;
-                        break;
+                        
+                        break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
                     }
-
-                }
-                
+                }     
             }
-
             //SI NO HAY NINGUNA LLAVE O ESTA LLENA LA CREO. ADEMAS SE FIJA Q NO0 HAYA MAS DE 4 LLAVES
             //TODO HAY Q HYACER ESE 4 VARIABLE
-            if (($llave == [] ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
+            if (($cantidad_llaves == 0 ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
                 $llave = new Llave;
                 $llave->torneo_id = $request->torneo_id;
                 $llave->ronda = 1;
