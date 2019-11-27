@@ -14,7 +14,7 @@ class NovedadController extends Controller
      */
     public function index()
     {
-        $noticias = Novedad::with('categoria')->get();
+        $noticias = Novedad::with('categoria')->orderBy('id','desc')->take(3)->get();
 
         return $noticias;
     }

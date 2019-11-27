@@ -122,13 +122,13 @@ export default function ModalInscripcion(props) {
     return (
     <div>
       <Button
-            className={classes.button}
+            className="m-3"
             color="primary"
             variant="contained"
             disabled={props.buttonValue}
             onClick={handleOpen}
       >
-        Registrarme
+        Inscribirme a un torneo
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

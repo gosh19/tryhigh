@@ -135,7 +135,7 @@ class UserView extends Component {
                         direction="column"
                         justify="center"
                         alignItems="flex-start"
-                        md={4}
+                        md={3}
                         sm={12}
                     >
                         <CajaUser 
@@ -158,7 +158,7 @@ class UserView extends Component {
                         direction="column"
                         justify="center"
                         alignItems="center"
-                        md={8}
+                        md={9}
                         sm={12}
                     >
                         {this.mostrarCajaLlave()}
