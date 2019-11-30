@@ -38,6 +38,48 @@ class PartidaController extends Controller
     {
         //
     }
+    /**
+     * RECIBE ID DEL USER MULTIPLICADO POR 64 Y CONFIRMA LA PARTIDA SI EL USER EXISTE
+     * EL 64 ES PARA LA ENCRIPTACION BASICA XD
+     */
+    public function confirmarPartida($id)
+    {
+        try {
+            $idReal = $id/64;
+    
+            $partida = Partida::where([ ['user_id',$idReal] , ['estado' , 'pendiente'] ])->orderBy('id','desc')->take(1)->get();
+            $partida = $partida[0];
+
+            $partida->confirmed = true;
+    
+            $partida->save();
+
+            $user = \App\User::find($idReal);
+
+            //return view('email-response.confirmacion-tft',['user' => $user]);
+
+            return ['confirmado' => 1];
+        } catch (\Throwable $th) {
+            //throw $th;
+           // return view('error.id-incorrecto', ['error' => $th]);
+           return ['confirmado' => 0, 'error' => $th];
+        }
+    }
+
+    public function infoConfirmacion($id)
+    {
+        $partida = Partida::where([ ['user_id',$id] , ['estado' , 'pendiente'] ])->orderBy('id','desc')->take(1)->get();
+
+        if ($partida != []) {
+            $partida = $partida[0];
+    
+            return ['estado' => $partida->confirmed];
+        }else {
+            return ['estado' => false];
+        }
+    
+
+    }
 
     /**
      * Display the specified resource.

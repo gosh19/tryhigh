@@ -90,7 +90,7 @@ class Llaves extends Component {
                             <Button
                                 color="secondary"
                                 variant="contained"
-                                disabled={true}
+                                disabled={false}
                                 onClick={() => this.finalizarLlave(insLlave[0].llave_id)}
                             >
                                 Finalizar Llave

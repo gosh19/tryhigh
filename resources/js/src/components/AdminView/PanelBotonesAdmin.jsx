@@ -41,6 +41,7 @@ class PanelBotonesAdmin extends Component {
                         justify="flex-start"
                         allingItems="center"
                     >
+                        {/** 
                         <Button
                             onClick={this.mostrarTableUsers}
                         >Ver Usuarios</Button>
@@ -49,6 +50,7 @@ class PanelBotonesAdmin extends Component {
                                 <VistaUsers />
                             </div>
                         </Grow>
+                        */}
                     </Grid>
                     <Grid
                         container

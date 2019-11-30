@@ -28,6 +28,7 @@ Route::resources([
     'llaves' => 'LlaveController',
 ]);
 
+Route::get('/envio-mail','MailController@store');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -38,6 +39,8 @@ Route::middleware('auth')->group(function(){
         return view('User.UserView')->with('user', Auth::user());
     });
     
+    Route::get('confirmar-tft/{id}', 'PartidaController@confirmarPartida');
+    Route::get('infoConfirmacion/{id}', 'PartidaController@infoConfirmacion');
 });
 
 Route::get('/AdminView' , function(){

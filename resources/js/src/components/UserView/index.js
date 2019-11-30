@@ -16,6 +16,7 @@ class UserView extends Component {
         this.state = {
             nombreInvocador: '',
             estadoRegistro: '',
+            estadoConfirmacion: true,
             userId: '',
             llaveId: '',
             partidasTerminadas: [],
@@ -29,6 +30,9 @@ class UserView extends Component {
         this.verificarRegistro = this.verificarRegistro.bind(this);
         this.volver = this.volver.bind(this);
         this.cargarSummoner = this.cargarSummoner.bind(this);
+        this.confirmarAsistencia = this.confirmarAsistencia.bind(this);
+        this.verificarConfirmacion = this.verificarConfirmacion.bind(this);
+
 
     }
 
@@ -39,6 +43,7 @@ class UserView extends Component {
         });
         this.verificarRegistro(userId);
         this.cargarSummoner(nombreInvocador);
+        this.verificarConfirmacion();
     }
 
     verificarRegistro(id){
@@ -67,6 +72,19 @@ class UserView extends Component {
         });     
     }
 
+    verificarConfirmacion(){
+        fetch('infoConfirmacion/'+userId)
+        .then(resposne => resposne.json())
+        .then(info => {
+            this.setState((state, props) =>{
+                console.log(info);
+                
+                return{
+                    estadoConfirmacion: info.estado,
+                }
+            } )
+        })
+    }
     cargarSummoner(){
         try {
             fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nombreInvocador+'?api_key=RGAPI-4e54510d-cbd1-4fce-b8f8-5d0a2549b70e')
@@ -81,6 +99,7 @@ class UserView extends Component {
                 })
             })
         } catch (error) {
+            console.log(error);
             
         }
     }
@@ -115,6 +134,13 @@ class UserView extends Component {
 
     volver(){
         window.location.href = "/"
+    }
+
+    confirmarAsistencia(){
+        fetch('confirmar-tft/'+(this.state.userId*64))
+        .then(response => response.json())
+        .then(info => location.reload()
+        );
     }
 
     render() {
@@ -152,6 +178,13 @@ class UserView extends Component {
                             color="primary"
                             onClick={this.volver}
                         >Volver al inicio</Button>
+                        <Button
+                            className="mt-4 text-white"
+                            variant="contained"
+                            disabled={this.state.estadoConfirmacion}
+                            color="secondary"
+                            onClick={this.confirmarAsistencia}
+                        >Confirmar Asistencia</Button>
                     </Grid>
                     <Grid
                         container
