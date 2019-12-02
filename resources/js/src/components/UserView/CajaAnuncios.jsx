@@ -23,7 +23,7 @@ class CajaAnuncios extends Component {
                         justify="flex-start"
                         md={6}
                     >
-                        <h1>Premios</h1>
+                        <h1>Anuncios</h1>
                     </Grid>
                 </Grid>
                 <Grid   //ROW DE CONTENIDO
@@ -34,7 +34,7 @@ class CajaAnuncios extends Component {
                 >
                     <div className="img-anuncio">
 
-                    <img src="/images/nasus-guardian-lunar-publi.jpg" width="100%" />
+                    <img src="/images/1v1-torneo.jpg" width="100%" />
                     </div>
                 </Grid>
             </div>
