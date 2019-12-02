@@ -193,12 +193,15 @@ class UserView extends Component {
                         alignItems="center"
                         md={9}
                         sm={12}
-                    >   
+                    >
+                    {/**
+                     * 
                         <div className="alert-danger p-3 mb-3 rounded">
                             <h1>Por favor ingresen al canal de discord para poder gestionar sus partidas</h1>
                             <hr />
                             <h2 className="text-center">   <a href="https://discord.gg/MJDWc7">-->Discord</a></h2>
                         </div>
+                     */}
                         {this.mostrarCajaLlave()}
                         <CajaNoticias />
                         <CajaAnuncios />

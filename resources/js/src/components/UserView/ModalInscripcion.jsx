@@ -113,7 +113,7 @@ export default function ModalInscripcion(props) {
         return <div
                 className="alert-warning font-weight-bold m-3 p-3 d-flex justify-content-center rounded border border-warning"
                 >
-                  Inscripciones abiertas entre el 24/11 y el 26/11</div>
+                  Inscripciones abiertas proximamente para el torneo 1v1</div>
       }
       
     }

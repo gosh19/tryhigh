@@ -115,11 +115,18 @@ class InscriptoController extends Controller
     {
         $ins = Inscripto::find($inscripto);
 
+        
         if ($ins == []) {
             return ['estado' => 0];
         }
         else{
-            return ['estado' => 1, 'datos' => $ins];
+            $torneo = \App\TorneoTft::find($ins->torneo_id);
+            if ($torneo->finalizado == 0) {
+                return ['estado' => 1, 'datos' => $ins];
+            }
+            else {
+                return ['estado' => 0];
+            }
         }
     }
     /**
