@@ -7,20 +7,9 @@ class Noticias extends Component {
         this.state = {
             novedades: this.props.noticias,
         }        
-        this.cargarNoticias = this.cargarNoticias.bind(this);
     }
 
-    cargarNoticias(){
-        //LLAMO A LaS NOTICIAS EN LA BD Y LOS EMTO EN UN ARRAY
 
-        const noticia = 
-            <div className="p-4">
-                <h2>Titulo</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque molestiae animi, neque dicta vero ipsum harum officia error velit facere excepturi dolor quae maiores adipisci fugiat, cum accusantium eum nihil!</p>
-            </div>;
-
-        return noticia;
-    }
 
     render() {
         

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Collapse, Button } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import Noticias from './Noticias';
 
 import './UserView.css';
@@ -9,9 +11,11 @@ class CajaNoticias extends Component {
         super(props);
         this.state = {
             noticias: [],
+            estadoNovedades: false,
         }
         this.setNoticias = this.setNoticias.bind(this);
         this.mostrarNoticias = this.mostrarNoticias.bind(this);
+        this.openNoticias = this.openNoticias.bind(this);
     }
 
     setNoticias(){
@@ -26,8 +30,7 @@ class CajaNoticias extends Component {
                 })
             })
         } catch (error) {
-            console.log('nosepudoxd');
-            
+            console.log('Error al cargar noticias'); 
         }
     }
 
@@ -39,6 +42,16 @@ class CajaNoticias extends Component {
         if (this.state.noticias.length != 0) {
             return (<Noticias noticias={this.state.noticias} />)
         }
+    }
+
+    openNoticias(){
+        console.log('xd');
+        
+        this.setState((state, props) =>{
+            return{
+                estadoNovedades: !this.state.estadoNovedades,
+            }
+        })
     }
 
     render() {
@@ -59,7 +72,7 @@ class CajaNoticias extends Component {
                         justify="flex-start"
                         md={6}
                     >
-                        <h1>Novedades</h1>
+                        <h1>Novedades<ExpandMoreIcon className="ml-2 text-white" fontSize='large' onClick={() => this.openNoticias()} /></h1>
                     </Grid>
                 </Grid>
                 <Grid   //ROW DE CONTENIDO
@@ -68,7 +81,12 @@ class CajaNoticias extends Component {
                     direction= "row"
                     justify="flex-start"
                 >
-                    {this.mostrarNoticias()}
+                    <Collapse
+                        in={this.state.estadoNovedades}
+                        className="w-100 pr-2"
+                        >
+                        {this.mostrarNoticias()}
+                    </Collapse>
                 </Grid>
             </div>
         );

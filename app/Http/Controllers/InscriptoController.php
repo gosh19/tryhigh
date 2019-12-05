@@ -39,6 +39,11 @@ class InscriptoController extends Controller
     public function store(Request $request)
     {
         try {
+            $torneo = \App\TorneoTft::find($request->torneo_id)->with('datosTipo')->get();
+            $torneo = $torneo[0];
+            $cantidadLlave = $torneo->datosTipo->cant_llave;    //SETEO LA CANTIDAD DE JUGADORES POR LLAVE
+
+
             $llave = Llave::where([['torneo_id', $request->torneo_id], ['ronda', 1]])->get();
 
             $cantidad_llaves = count($llave);
@@ -47,19 +52,19 @@ class InscriptoController extends Controller
             //SI HAY LLAVES CREADAS ME FIJO CUAL ESTA LIBRE APRA INSCRIPCION
             if($llaves != []){
                 foreach ($llaves as $ll) {  
-                    if ($ll->cant_jugadores < 8) {
+                    if ($ll->cant_jugadores < $cantidadLlave) { //LA CANTIDAD DE LA LLAVE LA OBTENGO DE LA BD ;)
                         
                         $llave = $ll;     
                         break;  //DONDE ENCUENTRA UNA LLAVE CON MENOS DE 8 JUGADORES SALE DEL CICLO
                     }
                 
-                $llave->cant_jugadores = 8;
+                $llave->cant_jugadores = $cantidadLlave;
             }     
         }
         
         //SI NO HAY NINGUNA LLAVE O ESTA LLENA LA CREO. ADEMAS SE FIJA Q NO0 HAYA MAS DE 4 LLAVES
         //TODO HAY Q HYACER ESE 4 VARIABLE
-        if (($cantidad_llaves == 0 ) || (($llave->cant_jugadores == 8) && ($cantidad_llaves < 4))) {
+        if (($cantidad_llaves == 0 ) || (($llave->cant_jugadores == $cantidadLlave) && ($cantidad_llaves < $torneo->cant_llaves))) {
             $llave = new Llave;
             $llave->torneo_id = $request->torneo_id;
             $llave->ronda = 1;
@@ -69,7 +74,7 @@ class InscriptoController extends Controller
         
         //ME FIJO SI LA LLAVE QUE VOY A USAR ESTA COMPLETA O NO
         //SI ESTA COMPLETA NO INSCRIBO AL QLIO
-        if ($llave->cant_jugadores == 8) {
+        if ($llave->cant_jugadores == $cantidadLlave) {
             return ['estado' => 0, 'mensaje' => 'Torneo completo!', 'llave' => $llave];
         }
         
