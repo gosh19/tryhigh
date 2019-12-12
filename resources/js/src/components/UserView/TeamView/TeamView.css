@@ -1,0 +1,23 @@
+@font-face{
+    font-family: nasalization;
+    src: url('./../fonts/nasalization-rg.ttf');
+}
+
+.fondo-team-section{
+    background: url('./../imagenes/fondo-team.jpg');
+    padding: 1.5rem;
+}
+
+.crear-team-section h1,h2{
+    font-family: nasalization;
+    text-align: center;
+    color: rgb(117, 201, 204);
+}
+
+.seccion-crear-team{
+    padding: 1.5rem;
+    border: 2px solid rgb(96, 5, 148);
+    border-radius: 15px;
+    background: rgba(44, 1, 54, 0.5);
+
+}

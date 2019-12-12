@@ -1,6 +1,6 @@
 @font-face{
     font-family: nasalization;
-    src: url('nasalization-rg.ttf');
+    src: url('./fonts/nasalization-rg.ttf');
 }
 
 .fondo-negro{
