@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
 import { Grid, Button } from '@material-ui/core';
+import ModalCrearTeam from './ModalCrearTeam';
 
 class CrearTeam extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            open: false,
+        }
+        this.openModalCrearTeam = this.openModalCrearTeam.bind(this);
+    }
+
+    openModalCrearTeam(){
+        this.setState((state, props) => {
+            return{
+                open: true,
+            }
+        })
+    }
+
     render() {
+        
         return (
             <div className="crear-team-section">
                 <Grid
@@ -31,8 +49,14 @@ class CrearTeam extends Component {
                                 variant="contained"
                                 color="primary"
                                 className="boton-crear-team"
-                                >Crear Team 5v5</Button>
+                                onClick={this.openModalCrearTeam}
+                            >Crear Team 5v5</Button>
+
+                            
                             </Grid>
+                            <ModalCrearTeam 
+                                open={this.state.open}
+                            />
                         </div>
                     </Grid>
                 </Grid>

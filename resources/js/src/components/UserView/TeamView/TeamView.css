@@ -16,8 +16,18 @@
 
 .seccion-crear-team{
     padding: 1.5rem;
-    border: 2px solid rgb(96, 5, 148);
+    border: 2px solid rgb(48, 5, 148);
     border-radius: 15px;
-    background: rgba(44, 1, 54, 0.5);
+    background: rgba(13, 1, 54, 0.5);
 
+}
+
+.modal-crear-team{
+
+    background: rgb(212, 212, 212);
+    width: 300px;
+    padding: 20px;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 30px;
 }
