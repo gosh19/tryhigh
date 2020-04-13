@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Input, Grid } from '@material-ui/core';
+import { Modal, Input, Grid, Button } from '@material-ui/core';
 
 
 class ModalCrearTeam extends Component {
@@ -7,10 +7,13 @@ class ModalCrearTeam extends Component {
         super(props);
         this.state = {
             open: false,
+            teamName: '',
+            siglaTeam: '',
         }
 
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleOpen(){
@@ -27,6 +30,28 @@ class ModalCrearTeam extends Component {
             }
         })
     }
+
+    handleInputChange(e){  
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        if (name == "siglaTeam" )  {
+            if (value.length <4) {  //PARA Q NO TENGA MAS DE 3 LETRAS
+                
+                this.setState((state, props) => ({
+                    [name]: value.toUpperCase(),
+                }));
+            }
+        }else{
+
+            this.setState((state, props) => ({
+                [name]: value
+            }));
+        }
+
+    }
+
     componentWillReceiveProps(){
         
         this.setState((state, props) => {
@@ -36,7 +61,6 @@ class ModalCrearTeam extends Component {
         })
     }
     render() {
-        console.log('estado xd '+this.state.open);
 
         return (
             <div>
@@ -60,15 +84,19 @@ class ModalCrearTeam extends Component {
                                 name="teamName"
                                 placeholder="Nombre de tu Team"
                                 required
-
+                                value={this.state.teamName}
+                                onChange={this.handleInputChange}
                             />
                             <Input 
-                                autoFocus={true}
                                 name="siglaTeam"
                                 placeholder="Sigla"
                                 required
-
+                                value={this.state.siglaTeam}
+                                onChange={this.handleInputChange}
                             />
+                            <Button>
+                                asdsada
+                            </Button>
                         </Grid>
 
                     </div>
