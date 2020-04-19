@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\TeamLol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Integrante;
 
 class TeamLolController extends Controller
 {
@@ -35,23 +38,54 @@ class TeamLolController extends Controller
      */
     public function store(Request $request)
     {
+
         try {
             $teamLol = new TeamLol;
     
-            $teamLol->nombre = $request->nombre;
+            $teamLol->nombre = $request->name;
             $teamLol->sigla = $request->sigla;
     
             $teamLol->save();
+
+            $integrante = new Integrante;
+            $integrante->user_id = Auth::user()->id;
+            $integrante->lider = 1;
+            $integrante->team_id = $teamLol->id;
+
+            $integrante->save();
             
             return ['estado' => 1 , 'error' => 0];
         } catch (\Throwable $th) {
             
-            return ['estado' => 0 , 'error' => $th];
+            return ['estado' => 0 , 'error' => $th->getMessage()];
         }
-
-
     }
 
+    public function getInfoTeam()
+    {
+        try {
+            $integrante = Integrante::find(Auth::user()->id)->with('TeamLol')->get();
+
+            if (count($integrante)!= 0) {
+                return ['exist' => 1, 'integrante' => $integrante];
+            }
+            return ['exist' => 0];
+        } catch (\Throwable $th) {
+            return ['exist' => 0, 'error' => $th->getMessage()];
+        }
+    }
+
+    public function getIntegrantes($team_id)
+    {
+        try {
+            $integrantes = Integrante::where('team_id', $team_id)->with('user')->get();
+
+            return $integrantes;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+        }
+    }
     /**
      * Display the specified resource.
      *

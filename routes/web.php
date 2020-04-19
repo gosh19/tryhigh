@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function(){
     
     Route::get('confirmar-tft/{id}', 'PartidaController@confirmarPartida');
     Route::get('infoConfirmacion/{id}', 'PartidaController@infoConfirmacion');
+    Route::resource('TeamLol', 'TeamLolController');
+    Route::get('/get-info-team', 'TeamLolController@getInfoTeam');
+    Route::get('/get-Integrantes/{team_id}', 'TeamLolController@getIntegrantes');
 });
 
 Route::get('/AdminView' , function(){

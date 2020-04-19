@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Input, Grid, Button } from '@material-ui/core';
+import swal from 'sweetalert';
 
 
 class ModalCrearTeam extends Component {
@@ -14,6 +15,7 @@ class ModalCrearTeam extends Component {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.createTeam = this.createTeam.bind(this);
     }
 
     handleOpen(){
@@ -50,6 +52,36 @@ class ModalCrearTeam extends Component {
             }));
         }
 
+    }
+
+    createTeam(){
+        const data ={
+            name: this.state.teamName,
+            sigla: this.state.siglaTeam
+        }
+        fetch('/TeamLol',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(info => {
+            if (info.estado) {
+                swal('Grat!', 'Equipo creado con exito', 'success');
+                this.setState(() => {
+                    return{
+                        teamName: '',
+                        siglaTeam: '',
+                    }
+                });
+                this.handleClose();
+            }
+        })
+        
     }
 
     componentWillReceiveProps(){
@@ -94,7 +126,11 @@ class ModalCrearTeam extends Component {
                                 value={this.state.siglaTeam}
                                 onChange={this.handleInputChange}
                             />
-                            <Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={this.createTeam}
+                            >
                                 asdsada
                             </Button>
                         </Grid>
