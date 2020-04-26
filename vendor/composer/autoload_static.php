@@ -478,6 +478,7 @@ class ComposerStaticInit265735ca8935bd77f11d435b37cc0cf0
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Inscripto' => __DIR__ . '/../..' . '/app/Inscripto.php',
         'App\\Integrante' => __DIR__ . '/../..' . '/app/Integrante.php',
+        'App\\Invitation' => __DIR__ . '/../..' . '/app/Invitation.php',
         'App\\Llave' => __DIR__ . '/../..' . '/app/Llave.php',
         'App\\Mail\\MessageReceived' => __DIR__ . '/../..' . '/app/Mail/MessageReceived.php',
         'App\\Novedad' => __DIR__ . '/../..' . '/app/Novedad.php',

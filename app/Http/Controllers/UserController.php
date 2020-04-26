@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,6 +17,16 @@ class UserController extends Controller
     {
         $users = User::all();
         return $users;
+    }
+
+    public function searchInvocadores($data= null)
+    {
+        if ($data == null) {
+            return [];
+        }
+        $invocadores = User::where([['nameInvocador','LIKE', '%'.$data.'%'],['id','<>',Auth::user()->id]])->take(10)->get();
+
+        return $invocadores;
     }
 
     /**

@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles,  CircularProgress } from '@material-ui/core';
 import './TeamView.css';
+import Integrante from './Integrante';
 
 const useStyles = makeStyles(() => ({
     root:{
@@ -10,36 +11,49 @@ const useStyles = makeStyles(() => ({
         fontFamily: 'nasalization',
         background: 'rgba(0,0,0,0.7)'
     }
-}))
+}));
+
 export default function PanelIntegrantes(props){
     const classes = useStyles();
     const [integrantes , setIntegrantes] = React.useState([]);
-
+    
 
     React.useEffect(() => {
         getIntegrantes();
     }, [])
 
     const getIntegrantes = () => {
-        console.log(35);
         
         fetch('/get-Integrantes/'+props.team.id)
         .then(response => response.json())
         .then(info => {            
             setIntegrantes(info);
-        })
+        });
+
     }
 
+
     const renderIntegrantes = () => {
-        const render = integrantes.map((integrante, index) => {
-            console.log(integrante);
-            
-            return <h1>{integrante.user.name}</h1>
-        })
-        return <h1>{render} </h1>;
+ 
+        if (integrantes.length != 0) {
+            let render = new Array();
+            for (let index = 0; index < 5; index++) {
+                if (integrantes[index] != null) {
+                    
+                    render.push(<Integrante key={index} integrante={integrantes[index]}/>);
+                }else{
+
+                    render.push(<Integrante key={index} integrante={null}/>);
+                }
+            }
+            return <h1>{render} </h1>;
+        }
+        return <CircularProgress />
     }
 
     return(
-        <div className={classes.root} >{renderIntegrantes()}</div>
+        <div className={classes.root} >
+            {renderIntegrantes()}
+        </div>
     );
 }

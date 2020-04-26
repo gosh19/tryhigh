@@ -3,6 +3,7 @@ import { Grid, makeStyles } from '@material-ui/core';
 
 import './TeamView.css';
 import PanelIntegrantes from './PanelIntegrantes';
+import Invitaciones from './Invitaciones';
 
 const useStyles = makeStyles(() => ({
     root:{
@@ -48,6 +49,15 @@ export default function PanelTeam(props){
                 >
                     <img className={classes.avatar} src="/images/thlogo.png" alt="Avatar"/>
                 </Grid>
+                <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="flex-start"
+                >
+                    <Invitaciones />
+                </Grid>
+
             </Grid>
             <Grid item sm={8}>
                 <PanelIntegrantes team={team} />

@@ -38,12 +38,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/UserView' , function(){
         return view('User.UserView')->with('user', Auth::user());
     });
-    
+    Route::resource('Invitation', 'InvitationController');
     Route::get('confirmar-tft/{id}', 'PartidaController@confirmarPartida');
     Route::get('infoConfirmacion/{id}', 'PartidaController@infoConfirmacion');
     Route::resource('TeamLol', 'TeamLolController');
     Route::get('/get-info-team', 'TeamLolController@getInfoTeam');
     Route::get('/get-Integrantes/{team_id}', 'TeamLolController@getIntegrantes');
+    Route::get('/serch-invocadores/{data?}','UserController@searchInvocadores');
+
 });
 
 Route::get('/AdminView' , function(){

@@ -38,6 +38,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Inscripto' => $baseDir . '/app/Inscripto.php',
     'App\\Integrante' => $baseDir . '/app/Integrante.php',
+    'App\\Invitation' => $baseDir . '/app/Invitation.php',
     'App\\Llave' => $baseDir . '/app/Llave.php',
     'App\\Mail\\MessageReceived' => $baseDir . '/app/Mail/MessageReceived.php',
     'App\\Novedad' => $baseDir . '/app/Novedad.php',
