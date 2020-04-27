@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalAddIntegrante(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(props.open);
+  const [open, setOpen] = React.useState(false);
 
 
   const handleClose = () => {
@@ -47,8 +47,6 @@ export default function ModalAddIntegrante(props) {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        mountOnEnter
-        unmountOnExit
       >
         {body}
       </Modal>

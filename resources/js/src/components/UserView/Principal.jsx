@@ -152,15 +152,12 @@ class Principal extends Component {
                     direction="row"
                     justify="center"
                     alignItems="flex-start"
-                    sm={12}
                 >
                     <Grid
                         container
                         direction="column"
                         justify="center"
                         alignItems="flex-start"
-                        md={3}
-                        sm={12}
                     >
                         <CajaUser 
                             nombreInvocador={this.state.nombreInvocador}
@@ -176,21 +173,12 @@ class Principal extends Component {
                             color="primary"
                             onClick={this.volver}
                         >Volver al inicio</Button>
-                        <Button
-                            className="mt-4 text-white"
-                            variant="contained"
-                            disabled={this.state.estadoConfirmacion}
-                            color="secondary"
-                            onClick={this.confirmarAsistencia}
-                        >Confirmar Asistencia</Button>
                     </Grid>
                     <Grid
                         container
                         direction="column"
                         justify="center"
                         alignItems="center"
-                        md={9}
-                        sm={12}
                     >
                     {/**
                      * 

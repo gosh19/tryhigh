@@ -31,9 +31,7 @@ class CrearTeam extends Component {
                 >
                     <Grid
                         item
-                        direction="column"
                         className="seccion-crear-team"
-                        justify="center"
                     >
                         <div className="justify-content-center">
                             <h1>Aun no estas inscripto en ningun team</h1>

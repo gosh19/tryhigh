@@ -15,11 +15,15 @@ const useStyles = makeStyles(() => ({
     expand: {
         transform: 'rotate(0deg)',
         transition: "1s",
+        '&:hover':{
+  
+            cursor:'pointer',
+        }
       },
     expandOpen: {
         transform: 'rotate(180deg)',
         fontSize: 50,
-        color: '#FFF'
+        color: '#FFF',
     },
     paper:{
         width: '100%',
@@ -36,6 +40,7 @@ export default function Invitaciones(){
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const [invitations, setInvitations] = React.useState([]);
+    const [number, setNumber] = React.useState(0);
 
     const getInvitations = () => {
         fetch('/Invitation')
@@ -48,10 +53,32 @@ export default function Invitaciones(){
         getInvitations();
     },[]);
 
-    const deleteInvitation = (id) => {
+    const deleteInvitation = (index) => {
         let invs = invitations;
-        
+        const data = invs.splice(index,1);           
+        fetch('/Invitation/'+data[0].user_id,{
+            method: 'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data[0])
+
+        })
+        .then(response => response.json())
+        .then(info => {     
+                  
+            if (info.estado) {
+                setInvitations(invs);
+                setNumber(number+1); //CON ESTO ME HACE EL RENDERIZADO DE NUEVO, SINO NO
+            }else{
+                //swal('Error', info.error, 'error');
+                console.log(info);
+            }
+        })   
     }
+
     return(
         <Grid
             container
@@ -78,7 +105,7 @@ export default function Invitaciones(){
                                     >
 
                                         <h5>{invitation.user.nameInvocador}</h5>
-                                        <ClearIcon className={classes.deleteIcon} />
+                                        <ClearIcon className={classes.deleteIcon} onClick={() => deleteInvitation(index)} />
                                     </Grid>
                         })}
                     </Paper>

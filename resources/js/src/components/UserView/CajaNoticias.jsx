@@ -70,7 +70,6 @@ class CajaNoticias extends Component {
                         direction= "column"
                         alligncontent="start"
                         justify="flex-start"
-                        md={6}
                     >
                         <h1>Novedades<ExpandMoreIcon className="ml-2 text-white" fontSize='large' onClick={() => this.openNoticias()} /></h1>
                     </Grid>

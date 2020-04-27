@@ -94,8 +94,18 @@ class InvitationController extends Controller
      * @param  \App\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invitation $invitation)
+    public function destroy(Request $request)
     {
-        //
+        
+        try{
+            $invitation = Invitation::where([['sender',Auth::user()->id],['receiver',$request->receiver]])->get();
+            foreach ($invitation as $inv ) {
+                $inv->delete();
+            }
+            return ['estado'=>1];
+        }
+        catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
     }
 }

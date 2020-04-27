@@ -126,8 +126,15 @@ class TeamLolController extends Controller
      * @param  \App\TeamLol  $teamLol
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TeamLol $teamLol)
+    public function destroy($id)
     {
-        //
+        try {
+            $team = TeamLol::find($id);
+            $team->delete();
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+
+        }
     }
 }

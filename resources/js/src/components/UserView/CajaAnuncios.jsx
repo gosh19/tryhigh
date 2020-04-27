@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import Noticias from './Noticias';
 
 
 class CajaAnuncios extends Component {
@@ -21,7 +20,6 @@ class CajaAnuncios extends Component {
                         direction= "column"
                         alligncontent="start"
                         justify="flex-start"
-                        md={6}
                     >
                         <h1>Anuncios</h1>
                     </Grid>

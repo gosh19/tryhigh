@@ -71,14 +71,8 @@ class ModalCrearTeam extends Component {
         .then(response => response.json())
         .then(info => {
             if (info.estado) {
-                swal('Grat!', 'Equipo creado con exito', 'success');
-                this.setState(() => {
-                    return{
-                        teamName: '',
-                        siglaTeam: '',
-                    }
-                });
-                this.handleClose();
+                swal('Great!', 'Equipo creado con exito', 'success');
+                location.reload();
             }
         })
         
@@ -131,7 +125,7 @@ class ModalCrearTeam extends Component {
                                 color="primary"
                                 onClick={this.createTeam}
                             >
-                                asdsada
+                                Crear
                             </Button>
                         </Grid>
 

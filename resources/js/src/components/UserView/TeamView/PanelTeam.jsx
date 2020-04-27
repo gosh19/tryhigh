@@ -1,9 +1,10 @@
 import React from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Button } from '@material-ui/core';
 
 import './TeamView.css';
 import PanelIntegrantes from './PanelIntegrantes';
 import Invitaciones from './Invitaciones';
+import swal from 'sweetalert';
 
 const useStyles = makeStyles(() => ({
     root:{
@@ -22,10 +23,33 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
+const deleteTeam = (id) => {
+    fetch('/TeamLol/'+id,{
+        method: 'DELETE',
+        headers:{
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        credentials: 'same-origin',
+        //body: JSON.stringify(data[0])
+
+    })
+    .then(response => response.json())
+    .then(info => {
+        if (info.estado) {
+            location.reload();
+        }else{
+            swal('Error', info.error, 'error');
+        }
+        
+    })
+}
+
 export default function PanelTeam(props){
     const classes = useStyles();
 
     const [team, SetTeam] = React.useState(props.team);
+
 
     return(
         <Grid
@@ -56,6 +80,13 @@ export default function PanelTeam(props){
                 alignItems="flex-start"
                 >
                     <Invitaciones />
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => deleteTeam(team.id)}
+                    >
+                        Eliminar Equipo
+                    </Button>
                 </Grid>
 
             </Grid>
