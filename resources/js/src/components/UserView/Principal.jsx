@@ -75,7 +75,6 @@ class Principal extends Component {
         .then(resposne => resposne.json())
         .then(info => {
             this.setState((state, props) =>{
-                console.log(info);
                 
                 return{
                     estadoConfirmacion: info.estado,
@@ -85,15 +84,24 @@ class Principal extends Component {
     }
     cargarSummoner(){
         try {
-            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nombreInvocador+'?api_key=RGAPI-4e54510d-cbd1-4fce-b8f8-5d0a2549b70e')
+            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nombreInvocador+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
             .then(response => response.json())
             .then(info => {
-                this.setState((state, props) =>{
-                    console.log(info);
-                    
+                this.setState((state, props) =>{                    
                     return{
                         datosInvocador: info,
                     }
+                });
+                fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/league/v4/entries/by-summoner/'+info.id+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
+                .then(response => response.json())
+                .then(rankInfo => {
+                    this.setState((prevState, props) =>{ 
+                        let data = prevState.datosInvocador;
+                        data.rankInfo = rankInfo;
+                        return{
+                            datosInvocador: data,
+                        }
+                    });
                 })
             })
         } catch (error) {
@@ -153,44 +161,40 @@ class Principal extends Component {
                     justify="center"
                     alignItems="flex-start"
                 >
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="flex-start"
-                    >
-                        <CajaUser 
-                            nombreInvocador={this.state.nombreInvocador}
-                            estadoRegistro = {this.state.estadoRegistro}
-                            userId={this.state.userId}
-                            datosInvocador={this.state.datosInvocador}
-                        />
-                        <Puntos />
-                        {this.mostrarCajaEstado()}
-                        <Button
-                            className="mt-4 text-white"
-                            variant="contained"
-                            color="primary"
-                            onClick={this.volver}
-                        >Volver al inicio</Button>
+                    <Grid item md={4}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="flex-start"
+                        >
+                            <CajaUser 
+                                nombreInvocador={this.state.nombreInvocador}
+                                estadoRegistro = {this.state.estadoRegistro}
+                                userId={this.state.userId}
+                                datosInvocador={this.state.datosInvocador}
+                            />
+                            <Puntos />
+                            {this.mostrarCajaEstado()}
+                            <Button
+                                className="mt-4 text-white"
+                                variant="contained"
+                                color="primary"
+                                onClick={this.volver}
+                            >Volver al inicio</Button>
+                        </Grid>
                     </Grid>
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
-                    >
-                    {/**
-                     * 
-                        <div className="alert-danger p-3 mb-3 rounded">
-                            <h1>Por favor ingresen al canal de discord para poder gestionar sus partidas</h1>
-                            <hr />
-                            <h2 className="text-center">   <a href="https://discord.gg/MJDWc7">-->Discord</a></h2>
-                        </div>
-                     */}
-                        {this.mostrarCajaLlave()}
-                        <CajaNoticias />
-                        <CajaAnuncios />
+                    <Grid item md={8}>
+
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                            >
+                            <CajaNoticias />
+                            <CajaAnuncios />
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

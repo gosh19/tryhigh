@@ -1,11 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Button, Modal } from '@material-ui/core';
 import ModalInscripcion from './ModalInscripcion';
 
 
@@ -25,17 +22,64 @@ const useStyles = makeStyles({
   },
   button: {
     marginTop: 20,
+  },
+  img:{
+    width: 100,
+    display: 'block',
+    margin: 'auto',
+    border: '2px solid #DBA901',
+    marginBottom: 15,
   }
 });
 
+const setRank = (value) => {
+
+  let url = '/images/logoRank/Emblem_';
+  switch (value) {
+    case 'IRON':
+      url = url+'Iron.png'
+      break;
+    case 'SILVER':
+      url = url+'Silver.png'
+      break;
+    case 'GOLD':
+      url = url+'Gold.png'
+      break;
+    case 'PLATINUM':
+      url = url+'Platinum.png'
+      break;
+    case 'DIAMOND':
+      url = url+'Diamond.png'
+      break;
+    case 'MASTER':
+      url = url+'Master.png'
+      break;
+    default:
+      break;
+  }
+}
+
 
 export default function CajaUser(props) {
-  const classes = useStyles();
+  const classes = useStyles(); 
+  const [imgRank, setImgRank] = React.useState('/images/logoRank/Emblem_Iron.png'); 
 
   const registrado = props.estadoRegistro;
   let buttonValue = false;
-  let openModal = false;
 
+
+  console.log(props.datosInvocador);
+  
+  React.useEffect(() => {
+    if (props.datosInvocador != null) {
+      if (props.datosInvocador.rankInfo != null) {
+        
+        const img = setRank(props.datosInvocador.rankInfo[0].tier);
+        setImgRank(img);
+      }
+      
+    }
+  }, [props.datosInvocador.rankInfo]);
   if(registrado == 1){
     buttonValue = true;
   }
@@ -44,13 +88,15 @@ export default function CajaUser(props) {
     <Card className={classes.card}>
 
         <CardContent>
+          <img src={'http://ddragon.leagueoflegends.com/cdn/10.8.1/img/profileicon/'+props.datosInvocador.profileIconId+'.png'} className={classes.img}/>
           <Typography gutterBottom variant="h5" component="h2" >
             {props.nombreInvocador}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2" >
-            {/*<strong>Nivel:</strong> {props.datosInvocador.summonerLevel} ESTA WEA ES PARA CUANDO RESUELVA LA API DEL LOL*/}
+            <strong>Nivel:</strong> {props.datosInvocador.summonerLevel}
           </Typography>
-          <img src="/images/escudo.png" width="50%" />
+          <img src={imgRank} className={classes.img}/>
+
         </CardContent>
         <ModalInscripcion 
           buttonValue={buttonValue}

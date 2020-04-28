@@ -30,7 +30,7 @@ export default function Integrante (props){
 
 
     const [state, setState] = React.useState({
-        rol: '',
+        rol: 0,
         name: '',
         iconLane: '',
       });
@@ -38,10 +38,11 @@ export default function Integrante (props){
     React.useEffect(() =>{
         
         if (props.integrante != null) {
-            
+            let valueRol = 0;
+            props.integrante.rol != null ? valueRol = props.integrante.rol : null ;
             setState({
                 ...state,
-                rol:props.integrante.rol,
+                rol: valueRol,
                 name: props.integrante.user.nameInvocador,
                 iconLane:setIcon(props.integrante.rol)
             })

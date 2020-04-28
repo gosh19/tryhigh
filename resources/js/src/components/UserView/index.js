@@ -92,13 +92,6 @@ function UserView() {
           <Principal />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
- 
-{/**
-            <div className="alert-danger p-2 m-3 rounded text-center"> 
-                <h1>Seccion en construccion <BuildIcon /></h1>
-                <p>Pronto estaremos cargando la seccion de Team para que puedan crear su equipo para el torneo oficial</p>
-            </div>
-          */}
 
             <TeamView />
         </TabPanel>
