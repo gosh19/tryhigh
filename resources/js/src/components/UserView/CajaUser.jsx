@@ -7,6 +7,7 @@ import ModalInscripcion from './ModalInscripcion';
 
 
 import './UserView.css';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
@@ -28,6 +29,12 @@ const useStyles = makeStyles({
     display: 'block',
     margin: 'auto',
     border: '2px solid #DBA901',
+    marginBottom: 15,
+  },
+  imgRank:{
+    width: 200,
+    display: 'block',
+    margin: 'auto',
     marginBottom: 15,
   }
 });
@@ -57,12 +64,13 @@ const setRank = (value) => {
     default:
       break;
   }
+  return url;
 }
 
 
 export default function CajaUser(props) {
   const classes = useStyles(); 
-  const [imgRank, setImgRank] = React.useState('/images/logoRank/Emblem_Iron.png'); 
+  const [imgRank, setImgRank] = React.useState(<CircularProgress />); 
 
   const registrado = props.estadoRegistro;
   let buttonValue = false;
@@ -71,13 +79,10 @@ export default function CajaUser(props) {
   console.log(props.datosInvocador);
   
   React.useEffect(() => {
-    if (props.datosInvocador != null) {
-      if (props.datosInvocador.rankInfo != null) {
-        
+    if ((props.datosInvocador != null) &&(props.datosInvocador.rankInfo != null)) {   
         const img = setRank(props.datosInvocador.rankInfo[0].tier);
-        setImgRank(img);
-      }
-      
+        const RImg = <img src={img} className={classes.imgRank}/>
+        setImgRank(RImg);
     }
   }, [props.datosInvocador.rankInfo]);
   if(registrado == 1){
@@ -95,7 +100,7 @@ export default function CajaUser(props) {
           <Typography gutterBottom variant="h5" component="h2" >
             <strong>Nivel:</strong> {props.datosInvocador.summonerLevel}
           </Typography>
-          <img src={imgRank} className={classes.img}/>
+          {imgRank}
 
         </CardContent>
         <ModalInscripcion 
