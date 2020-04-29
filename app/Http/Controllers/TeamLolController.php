@@ -86,6 +86,21 @@ class TeamLolController extends Controller
             return $th->getMessage();
         }
     }
+
+    public function changeTeamName(Request $request)
+    {
+        try {
+            $team = TeamLol::find($request->id);
+
+            $team->nombre = $request->name;
+
+            $team->save();
+
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
+    }
     /**
      * Display the specified resource.
      *

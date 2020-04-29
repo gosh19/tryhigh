@@ -50,25 +50,31 @@ export default function Integrante (props){
     },[])
 
     const setIcon = (value) =>{
-        let icon = null;
-        switch (parseInt(value)) {
-            case 1:
-                icon = "top";
-                break;
-            case 2:
-                icon = "mid";
-                break;
-            case 3:
-                icon = "jg";
-                break;
-            case 4:
-                icon = "bot";
-                break;
-            case 5:
-                icon = "supp";
-                break;
-            default:
-                break;
+        let icon = '...';
+        if (value != null) {
+            let urlImgPosition = '/images/logosPosition/Position_Challenger-'
+            switch (parseInt(value)) {
+                case 1:
+                    urlImgPosition = urlImgPosition+"Top.png";
+                    break;
+                case 2:
+                    urlImgPosition = urlImgPosition+"Mid.png";
+                    icon = "mid";
+                    break;
+                case 3:
+                    urlImgPosition = urlImgPosition+"Jungle.png";
+                    icon = "jg";
+                    break;
+                case 4:
+                    urlImgPosition = urlImgPosition+"Bot.png";
+                    icon = "bot";
+                    break;
+                case 5:
+                    urlImgPosition = urlImgPosition+"Support.png";
+                    icon = "supp";
+                    break;
+            }
+            return <img src={urlImgPosition} alt="Icon-Position" />;
         }
         return icon;
     }

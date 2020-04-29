@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/get-info-team', 'TeamLolController@getInfoTeam');
     Route::get('/get-Integrantes/{team_id}', 'TeamLolController@getIntegrantes');
     Route::get('/serch-invocadores/{data?}','UserController@searchInvocadores');
+    Route::post('/changeTeamName', 'TeamLolController@changeTeamName');
 
 });
 
