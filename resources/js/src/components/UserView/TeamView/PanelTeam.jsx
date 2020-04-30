@@ -32,6 +32,11 @@ const useStyles = makeStyles(() => ({
     inputEdit:{
         background:'#C7C7C7',
         borderRadius: 5,
+    },
+    btnDelete:{
+        background: '#5E3D15',
+        color: '#FFF',
+        marginTop: 15,
     }
 }))
 
@@ -43,8 +48,6 @@ const deleteTeam = (id) => {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         credentials: 'same-origin',
-        //body: JSON.stringify(data[0])
-
     })
     .then(response => response.json())
     .then(info => {
@@ -57,11 +60,61 @@ const deleteTeam = (id) => {
     })
 }
 
+const quitTeam = () => {
+    fetch('/deleteInvitation')
+    .then(response => response.json())
+    .then(info => {
+        console.log(info);
+        
+        if (info.estado) {
+            location.reload();
+        }
+    })
+}
+
 export default function PanelTeam(props){
     const classes = useStyles();
 
     const [team, SetTeam] = React.useState(props.team);
 
+    const renderButtonAndInvitations = (value) =>{
+        if (value) {
+          return  (
+            <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            >
+                <Invitaciones />
+                <Button
+                    variant="contained"
+                    onClick={() => deleteTeam(team.id)}
+                    className={classes.btnDelete}
+                >
+                    Eliminar Equipo
+                </Button>
+            </Grid>
+          
+          );
+        }
+        return(
+            <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            >
+                <Button
+                    variant="contained"
+                    onClick={() => quitTeam()}
+                    className={classes.btnDelete}
+                >
+                    Salir
+                </Button>
+            </Grid>
+        );
+    }
 
     return(
         <Grid
@@ -74,7 +127,7 @@ export default function PanelTeam(props){
         >
             <Grid  item sm={4}>
 
-              <NombreTeam team={team} />
+              <NombreTeam isLider={props.isLider} team={team} />
               <Grid
                 container
                 direction="row"
@@ -85,25 +138,11 @@ export default function PanelTeam(props){
                 >
                     <img className={classes.avatar} src="/images/thlogo.png" alt="Avatar"/>
                 </Grid>
-                <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="flex-start"
-                >
-                    <Invitaciones />
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => deleteTeam(team.id)}
-                    >
-                        Eliminar Equipo
-                    </Button>
-                </Grid>
+                {renderButtonAndInvitations(props.isLider)}
 
             </Grid>
             <Grid item sm={8}>
-                <PanelIntegrantes team={team} />
+                <PanelIntegrantes isLider={props.isLider} team={team} />
             </Grid>
         </Grid>
     );
@@ -149,6 +188,18 @@ function NombreTeam(props){
             }
             setLoad(false);
         })
+    }
+
+    if(!props.isLider){
+        return(
+            <Grid
+                container
+                justify='space-between'
+                className={classes.nombreTeam}
+            >
+                <h3 > {team.nombre}  </h3>
+            </Grid>
+        );
     }
 
     

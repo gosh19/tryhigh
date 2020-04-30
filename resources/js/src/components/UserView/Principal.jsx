@@ -23,12 +23,10 @@ class Principal extends Component {
             datosInvocador: [],
         };
 
-        this.mostrarCajaLlave = this.mostrarCajaLlave.bind(this);
         this.mostrarCajaEstado = this.mostrarCajaEstado.bind(this);
         this.verificarRegistro = this.verificarRegistro.bind(this);
         this.volver = this.volver.bind(this);
         this.cargarSummoner = this.cargarSummoner.bind(this);
-        this.confirmarAsistencia = this.confirmarAsistencia.bind(this);
         this.verificarConfirmacion = this.verificarConfirmacion.bind(this);
 
 
@@ -140,13 +138,6 @@ class Principal extends Component {
 
     volver(){
         window.location.href = "/"
-    }
-
-    confirmarAsistencia(){
-        fetch('confirmar-tft/'+(this.state.userId*64))
-        .then(response => response.json())
-        .then(info => location.reload()
-        );
     }
 
     render() {

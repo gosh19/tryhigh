@@ -101,46 +101,18 @@ class TeamLolController extends Controller
             return ['estado' => 0, 'error' => $th->getMessage()];
         }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\TeamLol  $teamLol
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TeamLol $teamLol)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TeamLol  $teamLol
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TeamLol $teamLol)
+    public function editRol($id, $rol)
     {
-        //
+        try {
+            $integrante = Integrante::find($id);
+            $integrante->rol = $rol;
+            $integrante->save();
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TeamLol  $teamLol
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TeamLol $teamLol)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\TeamLol  $teamLol
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {
@@ -150,6 +122,21 @@ class TeamLolController extends Controller
         } catch (\Throwable $th) {
             return ['estado' => 0, 'error' => $th->getMessage()];
 
+        }
+    }
+
+    public function deleteInvitation($id = null)
+    {
+        try {
+            if ($id == null) {
+                $id = Auth::user()->id;
+            }
+            $integrante = Integrante::find($id);
+            $integrante->delete();
+
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
         }
     }
 }

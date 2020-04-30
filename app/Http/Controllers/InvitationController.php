@@ -60,9 +60,15 @@ class InvitationController extends Controller
      * @param  \App\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function show(Invitation $invitation)
+    public function getInvitationUser()
     {
-        //
+        try {
+            $invitations = Invitation::where('receiver',Auth::user()->id)->with('sender')->get();
+
+            return ['estado' => 1, 'invitations' => $invitations];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'invitations' => $th->getMessage()];
+        }
     }
 
     /**
@@ -71,21 +77,29 @@ class InvitationController extends Controller
      * @param  \App\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invitation $invitation)
+    public function accept($id)
     {
-        //
-    }
+        try {
+            $invitation = Invitation::find($id);    //BUSCO LA INVITACION
+            $liderTeam = \App\Integrante::find($invitation->sender);    //TRAIGO LOS DATOS DELS ENDER PARA AGARRAR EL TEAM_ID
+            $team = \App\TeamLol::find($liderTeam->team_id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Invitation  $invitation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Invitation $invitation)
-    {
-        //
+            if (count($team->integrantes) < 5) {    //CONTROLO QUE HAYA MENOS DE 5
+
+                $newInt = new \App\Integrante;      //CREO EL NUEVO INTEGRANTE
+                $newInt->user_id = Auth::user()->id;
+                $newInt->team_id = $liderTeam->team_id;
+                $newInt->save();
+
+                $invitation->delete();  //BORRO LA INVITACION
+    
+                return['estado' => 1];
+            }
+            return ['estado' => 0, 'error' => 'Team Completo - maximo 5 integrantes'];
+
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
     }
 
     /**

@@ -88,7 +88,7 @@ export default function Invitaciones(){
             className={classes.root}
         >
             <Grid item>
-                <h3>Invitaciones <ExpandMoreIcon 
+                <h3>Invitaciones pendientes<ExpandMoreIcon 
                                                 className={clsx(classes.expand, {[classes.expandOpen]: expanded})} 
                                                 onClick={() =>setExpanded(!expanded)}
                                 /> 

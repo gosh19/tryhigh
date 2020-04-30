@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, FormControl, Select, InputLabel, makeStyles } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import ModalAddIntegrante from './ModalAddIntegrante';
 
 const useStyles = makeStyles(() => ({
@@ -88,19 +89,19 @@ export default function Integrante (props){
           [name]: event.target.value,
           iconLane: icon,
         });
+        
+        fetch('/Integrante/editRol/'+props.integrante.user_id+'/'+event.target.value) //LO MANDO AL BACK PARA CARGAR EN BD
+        .then(response => response.json())
+        .then(info => {
+            console.log(info);
+            
+        })
       };
+    
+    const renderSelect = () => {
 
-    const render = () => {
-        if (props.integrante != null) {
-           return( 
-            <Grid 
-                className={classes.integrante} 
-                container
-                justify="space-between"
-            >
-                <p>{state.name}</p>
-                <Grid item >{state.iconLane}</Grid>
-
+        if ((props.liderView) || (props.integrante.user_id == userId)) {
+            return(
                 <FormControl variant="filled" className={classes.formControl}>
                     <InputLabel htmlFor="filled-age-native-simple">Rol</InputLabel>
                     <Select
@@ -120,20 +121,52 @@ export default function Integrante (props){
                     <option value={5}>Support</option>
                     </Select>
                 </FormControl>
+            );
+        }
+    }
+
+    const render = () => {
+        if (props.integrante != null) {
+           return( 
+            <Grid 
+                className={classes.integrante} 
+                container
+                justify="space-between"
+            >
+                <p>{state.name}</p>
+                <Grid item >{state.iconLane}</Grid>
+                {renderSelect()}
+                
             </Grid>
            );
         }
-        return (<Grid 
-                    className={classes.integrante} 
-                    container
-                    justify="center"
-                >
-                    <AddCircleOutlineIcon 
-                        onClick={() => setOpenModalAdd(openModalAdd+1)}
-                        className={classes.addIcon} 
-                    />
-                </Grid>
+        else if(props.liderView){
+
+            return (<Grid 
+                        className={classes.integrante} 
+                        container
+                        justify="center"
+                    >
+                        <AddCircleOutlineIcon 
+                            onClick={() => setOpenModalAdd(openModalAdd+1)}
+                            className={classes.addIcon} 
+                            />
+                    </Grid>
                 )
+        }else{
+            return(
+                <Grid 
+                        className={classes.integrante} 
+                        container
+                        justify="center"
+                    >
+                        <HourglassFullIcon 
+                            className={classes.addIcon} 
+                            />
+                    </Grid>
+            );
+        }
+
     }
 
     return(

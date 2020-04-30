@@ -46,7 +46,10 @@ Route::middleware('auth')->group(function(){
     Route::get('/get-Integrantes/{team_id}', 'TeamLolController@getIntegrantes');
     Route::get('/serch-invocadores/{data?}','UserController@searchInvocadores');
     Route::post('/changeTeamName', 'TeamLolController@changeTeamName');
-
+    Route::get('/Integrante/editRol/{id}/{rol}', 'TeamLolController@editRol');
+    Route::get('/get-invitaciones-user', 'InvitationController@getInvitationUser');
+    Route::get('/accept-invitation/{id}', 'InvitationController@accept');
+    Route::get('/deleteInvitation/{id?}', 'TeamLolController@deleteInvitation');
 });
 
 Route::get('/AdminView' , function(){

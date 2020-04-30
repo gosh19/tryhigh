@@ -40,10 +40,10 @@ export default function PanelIntegrantes(props){
             for (let index = 0; index < 5; index++) {
                 if (integrantes[index] != null) {
                     
-                    render.push(<Integrante key={index} integrante={integrantes[index]}/>);
+                    render.push(<Integrante key={index} liderView={props.isLider} integrante={integrantes[index]}/>);
                 }else{
 
-                    render.push(<Integrante key={index} integrante={null}/>);
+                    render.push(<Integrante key={index} liderView={props.isLider} integrante={null}/>);
                 }
             }
             return <h1>{render} </h1>;

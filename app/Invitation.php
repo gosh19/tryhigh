@@ -10,4 +10,8 @@ class Invitation extends Model
     {
         return $this->belongsTo('App\User', 'receiver', 'id');
     }
+    public function sender()
+    {
+        return $this->belongsTo('App\User', 'sender', 'id');
+    }
 }

@@ -74,15 +74,20 @@ export default function CajaUser(props) {
 
   const registrado = props.estadoRegistro;
   let buttonValue = false;
-
-
-  console.log(props.datosInvocador);
   
   React.useEffect(() => {
-    if ((props.datosInvocador != null) &&(props.datosInvocador.rankInfo != null)) {   
-        const img = setRank(props.datosInvocador.rankInfo[0].tier);
-        const RImg = <img src={img} className={classes.imgRank}/>
-        setImgRank(RImg);
+    let img = null;
+    if ((props.datosInvocador != null) &&(props.datosInvocador.rankInfo != null)) { 
+      if (props.datosInvocador.rankInfo.length != 0) {
+        
+        const rank = props.datosInvocador.rankInfo.find(rank => rank.queueType = "RANKED_SOLO_5X5");
+        
+         img = rank!=null? setRank(rank.tier): setRank(props.datosInvocador.rankInfo[0].tier) ;
+      }else{
+         img = setRank('IRON');
+      }
+      const RImg = <img src={img} className={classes.imgRank}/>
+      setImgRank(RImg);
     }
   }, [props.datosInvocador.rankInfo]);
   if(registrado == 1){
