@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles,  CircularProgress } from '@material-ui/core';
 import './TeamView.css';
 import Integrante from './Integrante';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 const useStyles = makeStyles(() => ({
     root:{
@@ -10,13 +11,20 @@ const useStyles = makeStyles(() => ({
         color: '#cb9738',
         fontFamily: 'nasalization',
         background: 'rgba(0,0,0,0.7)'
+    },
+    btnReload:{
+        transition: '0.3s',
+        cursor:'pointer',
+        '&:hover':{
+            fontSize: 35,
+            color:'#ffc65d'
+        }
     }
 }));
 
 export default function PanelIntegrantes(props){
     const classes = useStyles();
-    const [integrantes , setIntegrantes] = React.useState([]);
-    
+    const [integrantes , setIntegrantes] = React.useState([]);   
 
     React.useEffect(() => {
         getIntegrantes();
@@ -24,6 +32,7 @@ export default function PanelIntegrantes(props){
 
     const getIntegrantes = () => {
         
+        setIntegrantes([]);
         fetch('/get-Integrantes/'+props.team.id)
         .then(response => response.json())
         .then(info => {            
@@ -53,6 +62,7 @@ export default function PanelIntegrantes(props){
 
     return(
         <div className={classes.root} >
+            <ReplayIcon className={classes.btnReload} onClick={() => getIntegrantes()} />
             {renderIntegrantes()}
         </div>
     );

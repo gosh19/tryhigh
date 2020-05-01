@@ -3,6 +3,9 @@ import { Grid, FormControl, Select, InputLabel, makeStyles } from '@material-ui/
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import ModalAddIntegrante from './ModalAddIntegrante';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import StarsIcon from '@material-ui/icons/Stars';
+import swal from 'sweetalert';
 
 const useStyles = makeStyles(() => ({
     integrante:{
@@ -24,7 +27,18 @@ const useStyles = makeStyles(() => ({
             cursor:'pointer',
         }
     },
-}))
+    btnDeleteInt:{
+        color:'#921010',
+        cursor:'pointer',
+        transition: '0.5s',
+        '&:hover':{
+            transition: '0.5s',
+            color:'#DE6B6B',
+            fontSize: 35,
+        }
+    }
+}));
+
 export default function Integrante (props){
     const classes = useStyles();
     const [openModalAdd, setOpenModalAdd] = React.useState(0);
@@ -129,14 +143,24 @@ export default function Integrante (props){
         if (props.integrante != null) {
            return( 
             <Grid 
-                className={classes.integrante} 
                 container
-                justify="space-between"
+                className={classes.integrante} 
             >
-                <p>{state.name}</p>
-                <Grid item >{state.iconLane}</Grid>
-                {renderSelect()}
-                
+                <Grid item xs={4}>
+                    <Grid container justify="flex-start">                        
+                        <NameInvocador nameInvocador={state.name} integrante={props.integrante} isLider={props.liderView} />
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container justify="center">
+                        {state.iconLane}
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container justify="flex-end">
+                        {renderSelect()}
+                    </Grid>
+                </Grid>       
             </Grid>
            );
         }
@@ -177,4 +201,73 @@ export default function Integrante (props){
                 {render()}
             </div>
 );
+}
+
+function NameInvocador(props) {
+    const classes = useStyles();
+    const [isLider] = React.useState(props.isLider);
+
+    const deleteInt = (id) => {
+        const data = {
+            'id': id,
+        }
+        fetch('/delete-integrante',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(info => {
+            if (info.estado) {
+                swal('Great', 'Integrante eliminado con exito', 'success');
+                location.reload();
+            }else{
+                swal('Error', info.error, 'error');
+            }
+        })
+    }
+
+    const renderName = () =>{
+        if (props.integrante.lider) {
+            return(
+                <Grid
+                    container
+                    justify="space-between"
+                >
+                    <p>{props.nameInvocador}</p>  
+                    <StarsIcon />
+
+                </Grid>
+            );
+        }
+        return <p>{props.nameInvocador}</p>;
+    }
+
+    if (isLider && (props.integrante.user_id != userId)) {
+        return(
+            <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+            >   
+                <Grid item >
+                    {renderName()}  
+                </Grid>
+                <Grid item >
+                    <HighlightOffIcon className={classes.btnDeleteInt} onClick={() => deleteInt(props.integrante.user_id)} />
+                </Grid>
+
+            </Grid>
+        );
+    }
+    return(
+        <div>
+
+        {renderName()}
+        </div>
+    );
 }

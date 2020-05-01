@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/get-invitaciones-user', 'InvitationController@getInvitationUser');
     Route::get('/accept-invitation/{id}', 'InvitationController@accept');
     Route::get('/deleteInvitation/{id?}', 'TeamLolController@deleteInvitation');
+    Route::post('/delete-integrante', 'TeamLolController@deleteIntegrante');
 });
 
 Route::get('/AdminView' , function(){

@@ -139,4 +139,18 @@ class TeamLolController extends Controller
             return ['estado' => 0, 'error' => $th->getMessage()];
         }
     }
+    public function deleteIntegrante(Request $request)
+    {
+        try {
+            $integrante = Integrante::find($request->id);
+
+            $integrante->delete();
+
+            return ['estado' => 1];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['estado' => 0, 'error' => $th->getMessage()];
+
+        }
+    }
 }
