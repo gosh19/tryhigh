@@ -29,69 +29,57 @@ class UserController extends Controller
         return $invocadores;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function userView()
     {
-        //
+
+        return view('User.UserView')->with('user', Auth::user());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getUserData()
     {
-        //
+        $user = User::find(Auth::user()->id);
+        $user->invokerData;
+        return $user;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updateInvokerData(Request $request)
     {
-        //
+        try {
+            $datosInvoker = \App\InvokerData::find(Auth::user()->id);
+            if ($datosInvoker == null) {
+                $datosInvoker = new \App\InvokerData;
+            }
+
+            $datosInvoker->user_id = Auth::user()->id;
+            if ($request['summonerLevel'] != null) {
+                $datosInvoker->icon = $request['profileIconId'];
+                $datosInvoker->lvl = $request['summonerLevel'];
+                if (count($request['rankInfo']) != 0) {
+                    $datosInvoker->type_league = $request['rankInfo'][0]['queueType'];
+                    $datosInvoker->tier_league = $request['rankInfo'][0]['tier'];
+                }
+            }
+            $datosInvoker->save();
+            return ['estado' => 1, 'data' => $datosInvoker];
+        } catch (\Throwable $th) {
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function changeName(Request $request)
     {
-        //
-    }
+        
+        try {
+            $user = User::find(Auth::user()->id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $user->nameInvocador = $request->name;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $user->save();
+
+            return ['estado'=>1];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
     }
 }

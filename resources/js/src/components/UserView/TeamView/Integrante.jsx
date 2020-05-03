@@ -104,12 +104,7 @@ export default function Integrante (props){
           iconLane: icon,
         });
         
-        fetch('/Integrante/editRol/'+props.integrante.user_id+'/'+event.target.value) //LO MANDO AL BACK PARA CARGAR EN BD
-        .then(response => response.json())
-        .then(info => {
-            console.log(info);
-            
-        })
+        fetch('/Integrante/editRol/'+props.integrante.user_id+'/'+event.target.value); //LO MANDO AL BACK PARA CARGAR EN BD
       };
     
     const renderSelect = () => {

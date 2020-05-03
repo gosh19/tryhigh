@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Container, Grid, Button } from '@material-ui/core';
+import { TextField, Container, Grid, Button, LinearProgress, CircularProgress } from '@material-ui/core';
 
 import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
@@ -15,6 +15,11 @@ class Inscripcion extends Component {
             nameInvocador:'',
             password:'',
             confpassword:'',
+            estadoRegistro:<img    
+                                width="100%"
+                                alt="Pingu-TFT"
+                                src="https://lolstatic-a.akamaihd.net/frontpage/apps/prod/tft-microsite/es_MX/4627a7b383b9145327c711513ad2dc731c3c7f2d/assets/images/floating-3.png"
+                            />,
         }
 
         this.registro = this.registro.bind(this);
@@ -34,53 +39,100 @@ class Inscripcion extends Component {
     }
 
     registro(){
-        //MANDA LOS DATOS AL BACK        
-        const data ={
-            'name': this.state.name,
-            'email': this.state.email,
-            'nameInvocador': this.state.nameInvocador,
-            'password': this.state.password
-        }
 
-        fetch('registro',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "same-origin",
-            body: JSON.stringify(data)
-        })
-        .then((response) => response.json())
-        .then((info) => {
+        var datosInvocador = 0;
+        this.setState(() => {
+            return{
+                estadoRegistro: <Grid container justify='center' className="alert alert-primary rounded">
+                                    <h1 className="text-center">Registro en curso, por favor espere</h1>
+                                    <CircularProgress />
+                                </Grid>
+            }
+        });
+        fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+this.state.nameInvocador+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
+        .then(response => response.json())
+        .then(info => {    
             console.log(info);
-            if(info.estado === 1){
-                swal(
-                    <div>
-                      <h1>Registrado con exito</h1>
-                    </div>
-                  ,{
-                    icon: "success",
-                    button: {
-                        text: "Ok",                       
+                   
+            datosInvocador = info;
+            
+            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/league/v4/entries/by-summoner/'+info.id+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
+            .then(response => response.json())
+            .then(rankInfo => {
+
+                datosInvocador.rankInfo = rankInfo;
+
+                //MANDA LOS DATOS AL BACK     
+                const data ={
+                    'name': this.state.name,
+                    'email': this.state.email,
+                    'nameInvocador': this.state.nameInvocador,
+                    'password': this.state.password,
+                    'datosInvocador': datosInvocador,
+                }
+
+
+                fetch('registro',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify(data)
+                })
+                .then((response) => response.json())
+                .then((info) => {
+                    console.log(info);
+                    if(info.estado === 1){
+                        swal(
+                            <div>
+                            <h1>Registrado con exito</h1>
+                            </div>
+                        ,{
+                            icon: "success",
+                            button: {
+                                text: "Ok",                       
+                            }
+                        });
+                        location.reload();
                     }
-                  });
-                  location.reload();
-            }
-            else{
-                swal(
-                    <div>
-                      <h1>Error al registrarse</h1>
-                    </div>
-                  ,{
-                    icon: "error",
-                    button: {
-                        text: "Salir",               
+                    else{
+                        swal(
+                            <div>
+                            <h1>Error al registrarse</h1>
+                            </div>
+                        ,{
+                            icon: "error",
+                            button: {
+                                text: "Salir",               
+                            }
+                        });
+                        this.setState(() => {
+                            return{
+                                estadoRegistro: <img    
+                                                    width="100%"
+                                                    alt="Pingu-TFT"
+                                                    src="https://lolstatic-a.akamaihd.net/frontpage/apps/prod/tft-microsite/es_MX/4627a7b383b9145327c711513ad2dc731c3c7f2d/assets/images/floating-3.png"
+                                                />,
+                            }
+                        });
                     }
-                  });
-            }
-        })
-        .catch((e) => console.log('NO HAY ONDA'+e));
-        
+                })
+                .catch((e) => console.log('ERROR AL CARGAR USER'+e));
+    
+    })
+})
+.catch((e) => {
+    console.log('ERROR AL OBTENER DATA DE INVOKER '+e);
+    this.setState(() => {
+        return{
+            estadoRegistro: <Grid container justify='center' className="alert alert-danger rounded">
+                                <h1 className="text-center">Datos de invocador incorrectos, revise la informacion y vuelva a intentar</h1>
+                            </Grid>,
+        }
+    });
+
+});
         
     }
     
@@ -103,7 +155,7 @@ class Inscripcion extends Component {
                 }
             }
         }
-        
+
         return (
             <div >
                 <Container>
@@ -210,11 +262,8 @@ class Inscripcion extends Component {
                             xs={12}
                             sm={6}
                         >
-                            <img    
-                                width="100%"
-                                alt="Pingu-TFT"
-                                src="https://lolstatic-a.akamaihd.net/frontpage/apps/prod/tft-microsite/es_MX/4627a7b383b9145327c711513ad2dc731c3c7f2d/assets/images/floating-3.png"
-                            />
+                            
+                            {this.state.estadoRegistro}
                         </Grid>
                     </Grid>
 

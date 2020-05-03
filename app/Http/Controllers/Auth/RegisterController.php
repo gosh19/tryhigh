@@ -52,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'nameInvocador' => ['required', 'string', 'max:255'],
+            'nameInvocador' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -66,9 +66,8 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-
         try {
-            User::create([
+           $id= User::insertGetId([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'nameInvocador' => $request['nameInvocador'],
@@ -76,10 +75,23 @@ class RegisterController extends Controller
                 'password' => Hash::make($request['password']),
             ]);
 
+            $datosInvoker = new \App\InvokerData;
+
+            $datosInvoker->user_id = $id;
+            if ($request->datosInvocador['summonerLevel'] != null) {
+                $datosInvoker->icon = $request->datosInvocador['profileIconId'];
+                $datosInvoker->lvl = $request->datosInvocador['summonerLevel'];
+                if (count($request->datosInvocador['rankInfo']) != 0) {
+                    $datosInvoker->type_league = $request->datosInvocador['rankInfo'][0]['queueType'];
+                    $datosInvoker->tier_league = $request->datosInvocador['rankInfo'][0]['tier'];
+                }
+            }
+            $datosInvoker->save();
+
             return ['estado' => 1];
 
         } catch (\Throwable $th) {
-            return ['estado' => $th];
+            return ['estado' => 0, 'error' => $th->getMessage()];
         }
         
     }

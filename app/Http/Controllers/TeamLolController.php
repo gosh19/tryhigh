@@ -153,4 +153,17 @@ class TeamLolController extends Controller
 
         }
     }
+
+    public function getLogosTeam()
+    {
+        try {
+            $logos = \App\LogoTeam::all();
+
+            return ['estado' => 1, 'logos' => $logos];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['estado' => 0, 'error' => $th->getMessage()];
+
+        }
+    }
 }

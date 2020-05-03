@@ -35,9 +35,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 //USUARIOS**********************************************************
 
 Route::middleware('auth')->group(function(){
-    Route::get('/UserView' , function(){
-        return view('User.UserView')->with('user', Auth::user());
-    });
+    Route::get('/UserView' , 'UserController@userView');
+    Route::get('/get-user-data' , 'UserController@getUserData');
+    Route::post('/update-invoker-data', 'UserController@updateInvokerData');
     Route::resource('Invitation', 'InvitationController');
     Route::get('confirmar-tft/{id}', 'PartidaController@confirmarPartida');
     Route::get('infoConfirmacion/{id}', 'PartidaController@infoConfirmacion');
@@ -51,14 +51,15 @@ Route::middleware('auth')->group(function(){
     Route::get('/accept-invitation/{id}', 'InvitationController@accept');
     Route::get('/deleteInvitation/{id?}', 'TeamLolController@deleteInvitation');
     Route::post('/delete-integrante', 'TeamLolController@deleteIntegrante');
+    Route::post('/change-nameInv', 'UserController@changeName');
+    Route::get('/get-logos-team', 'TeamLolController@getLogosTeam');
 });
 
 Route::get('/AdminView' , function(){
     return view('Admin.AdminView');
 });
 
-Route::get('/aaa' , 'MercadoPagoController@verPago');
-Route::get('/a' , 'MercadoPagoController@linkPago');
+Route::get('/a' , 'HomeController@test');
 
 Route::get('finalizarLlave/{llave_id}', 'LlaveController@finalizarLlave');
 

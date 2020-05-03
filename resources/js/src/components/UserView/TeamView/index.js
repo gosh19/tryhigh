@@ -88,7 +88,6 @@ function InvitacionesRecibidas(props) {
         fetch('/get-invitaciones-user')
         .then(response => response.json())
         .then(info => {
-            console.log(info);
             
             if (info.estado) {
                 setInvs(info.invitations);

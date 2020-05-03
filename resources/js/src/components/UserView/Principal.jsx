@@ -28,17 +28,15 @@ class Principal extends Component {
         this.volver = this.volver.bind(this);
         this.cargarSummoner = this.cargarSummoner.bind(this);
         this.verificarConfirmacion = this.verificarConfirmacion.bind(this);
-
+        this.actualizarInvokerData = this.actualizarInvokerData.bind(this);
+        this.getRiotData = this.getRiotData.bind(this);
 
     }
 
     componentDidMount(){
-        this.setState({
-            nombreInvocador: nombreInvocador, //ESTE DATO Y USERID LOS TRAIGO DE LA VISTA DE PHP
-            userId: userId,                   //EN FORMA DE SCRIPT Y VARIABLE GLOBAL. VER LA VISTA DONDE RENDERIZO ESTO PARA MAS INFO
-        });
+       
+        this.cargarSummoner();
         this.verificarRegistro(userId);
-        this.cargarSummoner(nombreInvocador);
         this.verificarConfirmacion();
     }
 
@@ -80,32 +78,80 @@ class Principal extends Component {
             } )
         })
     }
-    cargarSummoner(){
+
+    actualizarInvokerData(info){
+        fetch('/update-invoker-data',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            credentials:'same-origin',
+            body: JSON.stringify(info)
+        })
+        .then(response => response.json())
+        .then(info => {
+            if(info.estado){
+
+                this.setState(() =>{
+                    return{
+                        datosInvocador: info.data,
+                    }
+                })
+            }
+            
+        });
+    }
+
+    getRiotData(nameInv){
+        var dataInv = null;
         try {
-            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nombreInvocador+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
+            fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+nameInv+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
             .then(response => response.json())
             .then(info => {
-                this.setState((state, props) =>{                    
-                    return{
-                        datosInvocador: info,
-                    }
-                });
+                dataInv = info;
                 fetch('https://cors-anywhere.herokuapp.com/https://la2.api.riotgames.com/lol/league/v4/entries/by-summoner/'+info.id+'?api_key=RGAPI-153095d5-18cd-407b-a4ac-5671893d7d70')
                 .then(response => response.json())
                 .then(rankInfo => {
-                    this.setState((prevState, props) =>{ 
-                        let data = prevState.datosInvocador;
-                        data.rankInfo = rankInfo;
-                        return{
-                            datosInvocador: data,
-                        }
-                    });
+                    dataInv.rankInfo = rankInfo;
+                    this.actualizarInvokerData(dataInv);
                 })
             })
         } catch (error) {
             console.log(error);
-            
         }
+    }
+
+    cargarSummoner(){
+
+        fetch('/get-user-data')
+        .then(response => response.json())
+        .then(info => {
+            this.setState({
+                nombreInvocador: info.nameInvocador, //ESTE DATO Y USERID LOS TRAIGO DE LA VISTA DE PHP
+                userId: info.id,                   //EN FORMA DE SCRIPT Y VARIABLE GLOBAL. VER LA VISTA DONDE RENDERIZO ESTO PARA MAS INFO
+            });
+            
+            if (info.invoker_data == null) { //SI NO TIENE INFO DE INVOKER LA CARGO AHORA
+                this.getRiotData(info.nameInvocador); 
+            }else{
+                let hoy = new Date();
+                let lastLoad = new Date(info.invoker_data.updated_at);
+                lastLoad = lastLoad.getDate();
+                hoy = hoy.getDate();
+                if(hoy != lastLoad){
+                    this.getRiotData(info.nameInvocador);
+                }
+                else{
+                    this.setState((prevState, props) =>{ 
+                        return{
+                            datosInvocador: info.invoker_data,
+                        }
+                    });
+                }
+            }
+        });
+        
     }
 /**
  * si esta registrado muestra la caja llave
@@ -140,7 +186,7 @@ class Principal extends Component {
         window.location.href = "/"
     }
 
-    render() {
+    render() {        
         return (
             <div className="fondo-negro">
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Button, TextField, CircularProgress } from '@material-ui/core';
+import { Grid, makeStyles, Button, TextField, CircularProgress, Modal } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import './TeamView.css';
 import PanelIntegrantes from './PanelIntegrantes';
@@ -18,8 +19,7 @@ const useStyles = makeStyles(() => ({
         background: 'rgba(0,0,0,0.7)'
     },
     avatar:{
-        width: '60%',
-        borderRadius: '50%'
+        width:'100%',
     },
     btnEdit:{
         background: '#6F421E',
@@ -37,35 +37,52 @@ const useStyles = makeStyles(() => ({
         background: '#5E3D15',
         color: '#FFF',
         marginTop: 15,
-    }
+    },
+    logoEdit:{
+        width: 150,
+        margin:25,
+        border: '2px solid #D78A05',
+        background: '#000',
+        borderRadius:10,
+    },
+    paper: {
+        display:'block',
+        margin:'auto',
+        marginTop:20,
+        width: '70%',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        padding: 20,
+      },
 }))
 
 const deleteTeam = (id) => {
-    fetch('/TeamLol/'+id,{
-        method: 'DELETE',
+    const confirmation = confirm('Estas seguro que deseas eliminar el Equipo? Esta accion no puede deshacerse');
+    if (confirmation) {
+        
+        fetch('/TeamLol/'+id,{
+            method: 'DELETE',
         headers:{
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         credentials: 'same-origin',
-    })
-    .then(response => response.json())
-    .then(info => {
-        if (info.estado) {
-            location.reload();
-        }else{
-            swal('Error', info.error, 'error');
-        }
-        
-    })
+        })
+            .then(response => response.json())
+            .then(info => {
+            if (info.estado) {
+                location.reload();
+            }else{
+                swal('Error', info.error, 'error');
+            }
+            
+        })
+    }
 }
 
 const quitTeam = () => {
     fetch('/deleteInvitation')
     .then(response => response.json())
-    .then(info => {
-        console.log(info);
-        
+    .then(info => {        
         if (info.estado) {
             location.reload();
         }
@@ -136,7 +153,8 @@ export default function PanelTeam(props){
                 spacing={3}
                 className={classes.root}
                 >
-                    <img className={classes.avatar} src="/images/thlogo.png" alt="Avatar"/>
+                    <LogoTeam team={team}/>
+                    
                 </Grid>
                 {renderButtonAndInvitations(props.isLider)}
 
@@ -242,4 +260,58 @@ function NombreTeam(props){
             </Grid>
             );
 
+}
+
+function LogoTeam(props) {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [logos, setLogos] = React.useState([]);
+
+    const getLogosTeam = () => {
+        fetch('/get-logos-team')
+        .then(response => response.json())
+        .then(info =>{
+            console.log(info);
+            
+            if (info.estado) {
+                setLogos(info.logos);            
+            }
+        })
+    }
+    React.useEffect(() => {
+        getLogosTeam();
+    },[])
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    return(
+        <div>
+            <Modal 
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description" 
+            >
+                <Grid
+                    container
+                    direction='row'
+                    justify='center'
+                    className={classes.paper}
+                >
+                    {logos.map((logo, index) =>{
+                        return (
+                                <img className={classes.logoEdit} src={logo.url} alt={logo.name}/>
+                        );
+                    })}
+                </Grid>
+            </Modal>
+            <img className={classes.avatar} src="/storage/logoTeam/yi.png" alt="Avatar"/>
+            <EditIcon onClick={() => handleOpen()} style={{cursor:'pointer',color:'#FFF'}} />
+        </div>
+    )
 }

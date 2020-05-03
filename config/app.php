@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // Otros Providers...
+        App\Providers\RiotAPIServiceProvider::class,
     ],
 
     /*
@@ -228,7 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         
         // Otros Aliases
-
+        'RiotAPI' => App\Facades\RiotAPI::class,
     ],
 
 ];

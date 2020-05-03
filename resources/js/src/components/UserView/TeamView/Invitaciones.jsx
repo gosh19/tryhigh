@@ -74,9 +74,27 @@ export default function Invitaciones(){
                 setNumber(number+1); //CON ESTO ME HACE EL RENDERIZADO DE NUEVO, SINO NO
             }else{
                 //swal('Error', info.error, 'error');
-                console.log(info);
             }
         })   
+    }
+
+    const renderInvitaciones = () => {
+        if (invitations.length == 0) {
+            return <p>No hay invitaciones pendeintes</p>
+        }
+        invitations.map((invitation, index) => {
+            return <Grid
+                        key={index}
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="flex-start"
+                    >
+
+                        <h5>{invitation.user.nameInvocador}</h5>
+                        <ClearIcon className={classes.deleteIcon} onClick={() => deleteInvitation(index)} />
+                    </Grid>
+        })
     }
 
     return(
@@ -95,19 +113,7 @@ export default function Invitaciones(){
                 </h3>
                 <Collapse in={expanded}>
                     <Paper elevation={4} className={classes.paper}>
-                        {invitations.map((invitation, index) => {
-                            return <Grid
-                                        key={index}
-                                        container
-                                        direction="row"
-                                        justify="space-between"
-                                        alignItems="flex-start"
-                                    >
-
-                                        <h5>{invitation.user.nameInvocador}</h5>
-                                        <ClearIcon className={classes.deleteIcon} onClick={() => deleteInvitation(index)} />
-                                    </Grid>
-                        })}
+                        {renderInvitaciones()}
                     </Paper>
                 </Collapse>
             </Grid>
