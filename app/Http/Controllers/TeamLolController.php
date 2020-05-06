@@ -64,9 +64,10 @@ class TeamLolController extends Controller
     public function getInfoTeam()
     {
         try {
-            $integrante = Integrante::find(Auth::user()->id)->with('TeamLol')->get();
+            $integrante = Integrante::find(Auth::user()->id);
 
-            if (count($integrante)!= 0) {
+            if ($integrante!= null) {
+                $integrante->Teamlol->logo;
                 return ['exist' => 1, 'integrante' => $integrante];
             }
             return ['exist' => 0];
@@ -160,6 +161,21 @@ class TeamLolController extends Controller
             $logos = \App\LogoTeam::all();
 
             return ['estado' => 1, 'logos' => $logos];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['estado' => 0, 'error' => $th->getMessage()];
+
+        }
+    }
+    public function editLogo($team_id,$id)
+    {
+        try{
+            $team = TeamLol::find($team_id);
+            $team->logo_team_id = $id;
+
+            $team->save();
+
+            return ['estado' => 1];
         } catch (\Throwable $th) {
             //throw $th;
             return ['estado' => 0, 'error' => $th->getMessage()];

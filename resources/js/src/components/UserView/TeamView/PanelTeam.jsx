@@ -40,7 +40,6 @@ const useStyles = makeStyles(() => ({
     },
     logoEdit:{
         width: 150,
-        margin:25,
         border: '2px solid #D78A05',
         background: '#000',
         borderRadius:10,
@@ -48,11 +47,24 @@ const useStyles = makeStyles(() => ({
     paper: {
         display:'block',
         margin:'auto',
+        maxHeight: '80%',
         marginTop:20,
         width: '70%',
         backgroundColor: 'rgba(255,255,255,0.5)',
         padding: 20,
+        overflow:'scroll',
       },
+      logoItem:{
+          display:'inline-block',
+          padding:25,
+      },
+      btnChoose:{
+          background:'#fcfcfc',
+          marginTop:15,
+          '&:hover':{
+              background:'#D78A05',
+          }
+      }
 }))
 
 const deleteTeam = (id) => {
@@ -266,6 +278,7 @@ function LogoTeam(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [logos, setLogos] = React.useState([]);
+    const [logoSelected, setLogoSelected] = React.useState("/storage/logoTeam/yi.png");
 
     const getLogosTeam = () => {
         fetch('/get-logos-team')
@@ -280,7 +293,18 @@ function LogoTeam(props) {
     }
     React.useEffect(() => {
         getLogosTeam();
-    },[])
+
+    },[]);
+
+    React.useEffect(() => {
+        console.log(props.team);
+        
+        if(props.team != null){
+            if (props.team.logo != null) {
+                setLogoSelected(props.team.logo.url);
+            }
+        }
+    },[props.team]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -289,6 +313,12 @@ function LogoTeam(props) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const chooseLogo = (logo) => {
+        fetch('/Team-Lol/edit-logo/'+props.team.id+'/'+logo.id);
+        setLogoSelected(logo.url);
+
+    }
     return(
         <div>
             <Modal 
@@ -299,19 +329,28 @@ function LogoTeam(props) {
             >
                 <Grid
                     container
-                    direction='row'
-                    justify='center'
+                    justify="center"
                     className={classes.paper}
                 >
                     {logos.map((logo, index) =>{
                         return (
+                            <Grid className={classes.logoItem} item md={4}>
+                                <h4 className="text-center">{logo.name}</h4>
+                                <Grid container justify="center" direction="row" >
                                 <img className={classes.logoEdit} src={logo.url} alt={logo.name}/>
+                                <Button 
+                                    className={classes.btnChoose} 
+                                    onClick={() => chooseLogo(logo)}
+                                    >Seleccionar
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         );
                     })}
                 </Grid>
             </Modal>
-            <img className={classes.avatar} src="/storage/logoTeam/yi.png" alt="Avatar"/>
             <EditIcon onClick={() => handleOpen()} style={{cursor:'pointer',color:'#FFF'}} />
+            <img className={classes.avatar} src={logoSelected} alt="Avatar"/>
         </div>
     )
 }

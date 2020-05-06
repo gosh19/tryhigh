@@ -23,14 +23,15 @@ class TeamView extends Component {
         fetch('/get-info-team')
         .then(response => response.json())
         .then(info => {
+            console.log(info);
+            
             if (info.exist) {
-                const int = info.integrante.find(integrante => integrante.user_id == userId);
                 
                 this.setState(() => {
                     return{
-                        isLider: int.lider,
+                        isLider: info.integrante.lider,
                         hasTeam: true,
-                        team: info.integrante[0].team_lol,
+                        team: info.integrante.teamlol,
                     }
                 })     
             }            

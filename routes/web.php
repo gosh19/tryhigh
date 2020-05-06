@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/delete-integrante', 'TeamLolController@deleteIntegrante');
     Route::post('/change-nameInv', 'UserController@changeName');
     Route::get('/get-logos-team', 'TeamLolController@getLogosTeam');
+    Route::get('/Team-Lol/edit-logo/{team_id}/{id}', 'TeamLolController@editLogo');
 });
 
 Route::get('/AdminView' , function(){

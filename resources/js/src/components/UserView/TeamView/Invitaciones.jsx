@@ -80,7 +80,7 @@ export default function Invitaciones(){
 
     const renderInvitaciones = () => {
         if (invitations.length == 0) {
-            return <p>No hay invitaciones pendeintes</p>
+            return <p>No hay invitaciones pendientes</p>
         }
         invitations.map((invitation, index) => {
             return <Grid

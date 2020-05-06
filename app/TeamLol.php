@@ -14,4 +14,8 @@ class TeamLol extends Model
     {
         return $this->hasMany('App\Integrante', 'team_id', 'id');
     }
+    public function logo()
+    {
+        return $this->hasOne('App\LogoTeam', 'id','logo_team_id');
+    }
 }
