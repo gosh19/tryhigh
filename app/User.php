@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\InvokerData', 'user_id', 'id')->where('user_id', Auth::user()->id);
     }
+    public function integrante()
+    {
+        return $this->hasOne('App\Integrante');
+    }
 }

@@ -131,7 +131,7 @@ export default function CajaUser(props) {
         </CardContent>
         <ModalInscripcion 
           buttonValue={buttonValue}
-          userId={props.userId}
+          user={props.user}
         />
     </Card>
   );

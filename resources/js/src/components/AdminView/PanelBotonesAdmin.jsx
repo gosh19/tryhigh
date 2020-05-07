@@ -37,31 +37,14 @@ class PanelBotonesAdmin extends Component {
                 >
                     <Grid
                         container
-                        direction="column"
-                        justify="flex-start"
-                        allingItems="center"
-                    >
-                        {/** 
-                        <Button
-                            onClick={this.mostrarTableUsers}
-                        >Ver Usuarios</Button>
-                        <Grow  in={this.state.estadoTableUsers}>
-                            <div>
-                                <VistaUsers />
-                            </div>
-                        </Grow>
-                        */}
-                    </Grid>
-                    <Grid
-                        container
-                        direction="column"
+                        direction="row"
                         justify="flex-start"
                         allingItems="center"
                     >
                         <Button
                             onClick={this.mostrarFormTorneo}
                         >Crear Torneo</Button>
-                        <Grow  in={this.state.mostrarFormTorneo}>
+                        <Grow mountOnEnter unmountOnExit in={this.state.mostrarFormTorneo}>
                             <div>
                                 <FormCrearTorneoTft />
                             </div>

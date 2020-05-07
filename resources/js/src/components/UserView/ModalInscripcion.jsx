@@ -23,9 +23,10 @@ const useStyles = makeStyles(theme => ({
 
 var torneos = [];   //ARRAY CON LOS TORNEOS DISPONIBLES
 
-function inscribirme(userId, torneoId) {    
+function inscribirme(user, torneoId) { 
+
     const data ={
-        'user_id': userId,
+        'user_id': user.id,
         'torneo_id': torneoId,
     }
     
@@ -73,6 +74,7 @@ function inscribirme(userId, torneoId) {
 export default function ModalInscripcion(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+console.log(props.user);
 
   const handleOpen = () => {
     setOpen(true);
@@ -101,7 +103,7 @@ export default function ModalInscripcion(props) {
                       type="button"
                       color="secondary"
                       variant="contained"
-                      onClick ={() => inscribirme(props.userId, torneo.id)}
+                      onClick ={() => inscribirme(props.user, torneo.id)}
                   >
                       Inscribirme
                   </Button>
@@ -118,40 +120,48 @@ export default function ModalInscripcion(props) {
       
     }
     
+if (props.user != null) {
+  if (props.user.integrante != null) {
+    if (props.user.integrante.lider) {
+      return (
+        <div>
+          <Button
+                className="m-3"
+                color="primary"
+                variant="contained"
+                disabled={props.buttonValue}
+                onClick={handleOpen}
+          >
+            Inscribirme a un torneo
+          </Button>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className="modal-inscripcion">
+              <div className={classes.paper}>
+                <h2 id="transition-modal-title">Selecciona el torneo al que quieres inscribirte</h2>
+                <hr />
+                {renderTorneos()}
+              </div>
+              </div>
+            </Fade>
+          </Modal>
+        </div>
+      );
+    }
+  }
+}
 
-    return (
-    <div>
-      <Button
-            className="m-3"
-            color="primary"
-            variant="contained"
-            disabled={props.buttonValue}
-            onClick={handleOpen}
-      >
-        Inscribirme a un torneo
-      </Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className="modal-inscripcion">
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Selecciona el torneo al que quieres inscribirte</h2>
-            <hr />
-            {renderTorneos()}
-          </div>
-          </div>
-        </Fade>
-      </Modal>
-    </div>
-  );
+return null;
+    
 }

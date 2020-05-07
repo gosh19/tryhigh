@@ -284,7 +284,6 @@ function LogoTeam(props) {
         fetch('/get-logos-team')
         .then(response => response.json())
         .then(info =>{
-            console.log(info);
             
             if (info.estado) {
                 setLogos(info.logos);            
@@ -297,7 +296,6 @@ function LogoTeam(props) {
     },[]);
 
     React.useEffect(() => {
-        console.log(props.team);
         
         if(props.team != null){
             if (props.team.logo != null) {

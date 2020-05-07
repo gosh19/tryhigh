@@ -39,6 +39,7 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $user->invokerData;
+        $user->integrante;
         return $user;
     }
 

@@ -16,6 +16,7 @@ class Principal extends Component {
             estadoRegistro: '',
             estadoConfirmacion: true,
             userId: '',
+            user: null,
             llaveId: '',
             partidasTerminadas: [],
             partidasNoTerminadas: [],
@@ -127,9 +128,11 @@ class Principal extends Component {
         fetch('/get-user-data')
         .then(response => response.json())
         .then(info => {
+            
             this.setState({
-                nombreInvocador: info.nameInvocador, //ESTE DATO Y USERID LOS TRAIGO DE LA VISTA DE PHP
-                userId: info.id,                   //EN FORMA DE SCRIPT Y VARIABLE GLOBAL. VER LA VISTA DONDE RENDERIZO ESTO PARA MAS INFO
+                user: info,
+                nombreInvocador: info.nameInvocador, 
+                userId: info.id,                   
             });
             
             if (info.invoker_data == null) { //SI NO TIENE INFO DE INVOKER LA CARGO AHORA
@@ -206,6 +209,7 @@ class Principal extends Component {
                             alignItems="flex-start"
                         >
                             <CajaUser 
+                                user={this.state.user}
                                 nombreInvocador={this.state.nombreInvocador}
                                 estadoRegistro = {this.state.estadoRegistro}
                                 userId={this.state.userId}

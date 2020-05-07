@@ -9,7 +9,7 @@ import {
 
 export default function MaterialUIPickers(props) {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = date => {
     setSelectedDate(date);
@@ -19,7 +19,7 @@ export default function MaterialUIPickers(props) {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
+      <Grid container justify="center">
         <KeyboardDatePicker
           disableToolbar
           variant="inline"

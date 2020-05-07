@@ -23,7 +23,6 @@ class TeamView extends Component {
         fetch('/get-info-team')
         .then(response => response.json())
         .then(info => {
-            console.log(info);
             
             if (info.exist) {
                 
