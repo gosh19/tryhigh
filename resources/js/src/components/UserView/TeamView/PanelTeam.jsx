@@ -278,7 +278,7 @@ function LogoTeam(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [logos, setLogos] = React.useState([]);
-    const [logoSelected, setLogoSelected] = React.useState("/storage/logoTeam/yi.png");
+    const [logoSelected, setLogoSelected] = React.useState();
 
     const getLogosTeam = () => {
         fetch('/get-logos-team')
@@ -296,6 +296,7 @@ function LogoTeam(props) {
     },[]);
 
     React.useEffect(() => {
+        console.log(props.team);
         
         if(props.team != null){
             if (props.team.logo != null) {

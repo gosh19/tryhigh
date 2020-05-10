@@ -62,6 +62,9 @@ const setRank = (value) => {
     case 'IRON':
       url = url+'Iron.png'
       break;
+    case 'BRONZE':
+      url = url+'Bronze.png'
+      break;
     case 'SILVER':
       url = url+'Silver.png'
       break;

@@ -15,12 +15,10 @@ class CreateLlavesTable extends Migration
     {
         Schema::create('llaves', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('torneo_id');
             $table->string('ronda');
             $table->integer('cant_jugadores');
             $table->timestamps();
 
-            $table->foreign('torneo_id')->references('id')->on('torneo_tfts');
         });
     }
 

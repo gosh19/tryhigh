@@ -18,15 +18,6 @@ Route::post('/registro', 'Auth\RegisterController@create');
 
 
 Auth::routes();
-Route::resources([
-    'users' => 'UserController',
-    'torneo_tfts' => 'TorneoTftController',
-    'inscriptos' => 'InscriptoController',
-    'partidas' => 'PartidaController',
-    'categoria_novedads' => 'CategoriaNovedadController',
-    'novedads' => 'NovedadController',
-    'llaves' => 'LlaveController',
-]);
 
 Route::get('/envio-mail','MailController@store');
 
@@ -35,6 +26,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 //USUARIOS**********************************************************
 
 Route::middleware('auth')->group(function(){
+    Route::resources([
+        'users' => 'UserController',
+        'torneo_tfts' => 'TorneoTftController',
+        'inscriptos' => 'InscriptoController',
+        'partidas' => 'PartidaController',
+        'categoria_novedads' => 'CategoriaNovedadController',
+        'novedads' => 'NovedadController',
+        'llaves' => 'LlaveController',
+        'torneo' => 'TorneoController'
+    ]);
     Route::get('/UserView' , 'UserController@userView');
     Route::get('/get-user-data' , 'UserController@getUserData');
     Route::post('/update-invoker-data', 'UserController@updateInvokerData');

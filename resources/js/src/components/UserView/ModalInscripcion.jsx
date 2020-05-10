@@ -23,10 +23,9 @@ const useStyles = makeStyles(theme => ({
 
 var torneos = [];   //ARRAY CON LOS TORNEOS DISPONIBLES
 
-function inscribirme(user, torneoId) { 
+function inscribirme(torneoId) { 
 
     const data ={
-        'user_id': user.id,
         'torneo_id': torneoId,
     }
     
@@ -59,7 +58,7 @@ function inscribirme(user, torneoId) {
           swal(
               <div>
                 <h2>Error al registrarse</h2>
-          <h1>{info.mensaje}</h1>
+          <h1>{info.error}</h1>
               </div>
             ,{
               icon: "error",
@@ -85,7 +84,7 @@ console.log(props.user);
   };
 
 
-   fetch('torneo_tfts')
+   fetch('torneo')
     .then(response => response.json())
     .then(info => torneos = info
     );
@@ -97,13 +96,13 @@ console.log(props.user);
               
           return(
               <div key={torneo.id} className="torneo">
-                  <h3>{torneo.nombre}</h3>
+                  <h3>{torneo.name}</h3>
                   <h5>Fecha de inicio: {torneo.fecha_inicio}</h5>
                   <Button 
                       type="button"
                       color="secondary"
                       variant="contained"
-                      onClick ={() => inscribirme(props.user, torneo.id)}
+                      onClick ={() => inscribirme(torneo.id)}
                   >
                       Inscribirme
                   </Button>

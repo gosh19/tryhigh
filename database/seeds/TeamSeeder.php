@@ -29,8 +29,8 @@ class TeamSeeder extends Seeder
             }
             if (!$exist && ($i <8)) {
                 $team_id = DB::table('team_lols')->insertGetId([
-                    'nombre' => "Test team ".$i,
-                    'sigla' => 'TT'.$i,
+                    'nombre' => "Test team ".($i+20),
+                    'sigla' => 'TV'.$i,
                 ]);
                 DB::table('integrantes')->insert([
                     'user_id' => $user->id,

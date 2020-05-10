@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TeamLol extends Model
 {
     protected $fillable= [
-        'nombre', 'sigla', 'logo'
+        'nombre', 'sigla', 'logo_team_id'
     ];
 
     public function integrantes()
@@ -16,6 +16,6 @@ class TeamLol extends Model
     }
     public function logo()
     {
-        return $this->hasOne('App\LogoTeam', 'id','logo_team_id');
+        return $this->belongsTo('App\LogoTeam','logo_team_id','id');
     }
 }
