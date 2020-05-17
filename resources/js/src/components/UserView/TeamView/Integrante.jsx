@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, FormControl, Select, InputLabel, makeStyles } from '@material-ui/core';
+import { Grid, FormControl, Select, InputLabel, makeStyles, Box } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import ModalAddIntegrante from './ModalAddIntegrante';
@@ -141,17 +141,17 @@ export default function Integrante (props){
                 container
                 className={classes.integrante} 
             >
-                <Grid item xs={4}>
+                <Grid item xs={7}>
                     <Grid container justify="flex-start">                        
                         <NameInvocador nameInvocador={state.name} integrante={props.integrante} isLider={props.liderView} />
                     </Grid>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Grid container justify="center">
                         {state.iconLane}
                     </Grid>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Grid container justify="flex-end">
                         {renderSelect()}
                     </Grid>
@@ -233,7 +233,9 @@ function NameInvocador(props) {
                     container
                     justify="space-between"
                 >
-                    <p>{props.nameInvocador}</p>  
+                    <Box component="div" textOverflow="ellipsis"  whiteSpace="normal">
+                        {props.nameInvocador} 
+                    </Box>
                     <StarsIcon />
 
                 </Grid>
@@ -249,10 +251,10 @@ function NameInvocador(props) {
                 justify="space-between"
                 alignItems="center"
             >   
-                <Grid item >
+                <Grid item md={11}>
                     {renderName()}  
                 </Grid>
-                <Grid item >
+                <Grid item md={1}>
                     <HighlightOffIcon className={classes.btnDeleteInt} onClick={() => deleteInt(props.integrante.user_id)} />
                 </Grid>
 

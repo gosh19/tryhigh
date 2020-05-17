@@ -24,6 +24,23 @@ class TorneoController extends Controller
         }
     }
 
+    public function getAllTorneos()
+    {
+        try {
+            $torneos = Torneo::where([['abierto',0],['finalizado',0]])->with('llaves')->get();
+            foreach ($torneos as $key => $torneo) {
+                foreach ($torneo->llaves as $key => $llave) {
+                    $llave->team1->logo;
+                    $llave->team2->logo;
+                }
+            }
+            return ['estado' => 1, 'torneos' => $torneos];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['estado' => 0, 'error' => $th->getMessage()];
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

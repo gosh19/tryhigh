@@ -50,7 +50,7 @@ class InscriptoController extends Controller
             $torneo = \App\Torneo::find($request->torneo_id);
             
             $control = false;
-            foreach ($torneo->llaves as $key => $llave) {
+            foreach ($torneo->llaves as $key => $llave) {   //reviso si alguna llave tiene lugar
                 $control = false;
                 if ($llave->Team1 == null) {
                     $llave->Team1 = $integrante->team_id;
@@ -83,7 +83,7 @@ class InscriptoController extends Controller
                 }
             }
             
-            $inscripto = new Inscripto;         //llave creada, creo el inscripto
+            $inscripto = new Inscripto;         //creo el inscripto
             $inscripto->team_lol_id = $integrante->team_id;
             $inscripto->llave_id = $dataLlave->id;
             $inscripto->torneo_id = $request->torneo_id;

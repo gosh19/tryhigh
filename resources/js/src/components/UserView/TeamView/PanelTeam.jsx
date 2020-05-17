@@ -106,6 +106,57 @@ export default function PanelTeam(props){
 
     const [team, SetTeam] = React.useState(props.team);
 
+    const renderPanelTorneo = () => {
+        console.log(props.team);
+        if (props.team.inscripto_torneo != null) {
+            if(!props.team.infoTorneo.en_juego){
+                
+                return (
+                    <Grid
+                    container
+                    direction="row"
+                    className={classes.nombreTeam}
+                    >
+                        <Grid item md={4}>
+                        <p>Ronda: {props.team.inscripto_torneo.llave.ronda}</p>
+
+                        </Grid>
+                        <Grid item md={4}>
+                        <p>Fecha Siguiente Partida: {props.team.infoTorneo.fecha_inicio}</p>
+                            
+                        </Grid>
+                        <Grid item md={4}>
+                            
+                        <p>Oponente: Aun sin mostrar</p>
+                        </Grid>
+                    </Grid>
+                );
+            }else{
+                return (
+                    <Grid
+                    container
+                    direction="row"
+                    className={classes.nombreTeam}
+                    >
+                        <Grid item md={4}>
+                        <p>Ronda: {props.team.inscripto_torneo.llave.ronda}</p>
+
+                        </Grid>
+                        <Grid item md={4}>
+                        <p>Fecha Siguiente Partida: {props.team.infoTorneo.fecha_inicio}</p>
+                            
+                        </Grid>
+                        <Grid item md={4}>
+                            
+                        <p>Oponente: {props.team.inscripto_torneo.llave.Team2}</p>
+                        </Grid>
+                    </Grid>
+                );
+            }
+        }
+        return null;
+    }
+
     const renderButtonAndInvitations = (value) =>{
         if (value) {
           return  (
@@ -172,6 +223,7 @@ export default function PanelTeam(props){
 
             </Grid>
             <Grid item sm={8}>
+                {renderPanelTorneo()}
                 <PanelIntegrantes isLider={props.isLider} team={team} />
             </Grid>
         </Grid>
@@ -296,7 +348,6 @@ function LogoTeam(props) {
     },[]);
 
     React.useEffect(() => {
-        console.log(props.team);
         
         if(props.team != null){
             if (props.team.logo != null) {

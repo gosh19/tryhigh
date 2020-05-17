@@ -121,7 +121,7 @@ export default function CajaUser(props) {
     <Card className={classes.card}>
 
         <CardContent>
-          <img src={'http://ddragon.leagueoflegends.com/cdn/10.8.1/img/profileicon/'+iconId+'.png'} className={classes.img}/>
+          <img src={'http://ddragon.leagueoflegends.com/cdn/10.10.3208608/img/profileicon/'+iconId+'.png'} className={classes.img}/>
           <Typography gutterBottom variant="h5" component="h2" >
 
             <NombreInvocador nombreInvocador={props.nombreInvocador} />
@@ -188,7 +188,6 @@ function NombreInvocador(props) {
     })
     .then(response => response.json())
     .then(info => {
-      console.log(info);
       
       if(!info.estado){
         swal('Error', info.error, 'error');

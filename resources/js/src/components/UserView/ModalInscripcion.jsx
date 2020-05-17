@@ -39,7 +39,6 @@ function inscribirme(torneoId) {
     })
     .then(response => response.json())
     .then(info => {
-      console.log(info);
       
         if(info.estado === 1){
           swal(
@@ -73,7 +72,6 @@ function inscribirme(torneoId) {
 export default function ModalInscripcion(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-console.log(props.user);
 
   const handleOpen = () => {
     setOpen(true);

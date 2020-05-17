@@ -8,11 +8,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import BuildIcon from '@material-ui/icons/Build';
 
 import Principal from './Principal';
 import Footer from '../Footer';
 import TeamView from './TeamView';
+import TorneosView from './TorneosView';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -77,7 +77,7 @@ function UserView() {
         >
           <Tab label="Inicio" {...a11yProps(0)} />
           <Tab label="Team" {...a11yProps(1)} />
-          <Tab label="Info" {...a11yProps(2)} />
+          <Tab label="Torneos" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -94,10 +94,7 @@ function UserView() {
             <TeamView />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-            <div className="alert-danger p-2 m-3 rounded text-center"> 
-                <h1>Seccion en construccion <BuildIcon /></h1>
-                <p>Aqui podran ver sus estadisticas personales y los torneos en los que participaron dentro de <strong>TryHigh</strong></p>
-            </div>
+            <TorneosView />
         </TabPanel>
       </SwipeableViews>
       <Footer />

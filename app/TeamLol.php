@@ -18,4 +18,8 @@ class TeamLol extends Model
     {
         return $this->belongsTo('App\LogoTeam','logo_team_id','id');
     }
+    public function inscriptoTorneo()
+    {
+        return $this->hasOne('App\Inscripto', 'team_lol_id', 'id')->with('llave');
+    }
 }

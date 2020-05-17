@@ -55,10 +55,15 @@ Route::middleware('auth')->group(function(){
     Route::post('/change-nameInv', 'UserController@changeName');
     Route::get('/get-logos-team', 'TeamLolController@getLogosTeam');
     Route::get('/Team-Lol/edit-logo/{team_id}/{id}', 'TeamLolController@editLogo');
+    Route::get('/get-all-torneos', 'TorneoController@getAllTorneos');
 });
 
-Route::get('/AdminView' , function(){
-    return view('Admin.AdminView');
+Route::middleware('admin')->group(function(){
+
+    Route::get('/AdminView' , function(){
+        return view('Admin.AdminView');
+    });
+    Route::get('/admin', 'AdminController@index');
 });
 
 Route::get('/a' , 'HomeController@test');

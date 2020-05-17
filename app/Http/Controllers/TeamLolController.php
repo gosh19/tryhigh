@@ -68,6 +68,11 @@ class TeamLolController extends Controller
 
             if ($integrante!= null) {
                 $integrante->Teamlol->logo;
+                $integrante->Teamlol->inscriptoTorneo;
+                if ($integrante->Teamlol->inscriptoTorneo != null) {
+                    $torneo = \App\Torneo::find($integrante->Teamlol->inscriptoTorneo->torneo_id);
+                    $integrante->Teamlol->infoTorneo = $torneo;
+                }
                 return ['exist' => 1, 'integrante' => $integrante];
             }
             return ['exist' => 0];

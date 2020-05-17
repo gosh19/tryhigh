@@ -10,4 +10,8 @@ class Torneo extends Model
     {
         return $this->hasMany('App\Llave','torneo_lol_id','id');
     }
+    public function llavesEnJuego()
+    {
+        return $this->hasMany('App\Llave','torneo_lol_id','id')->where('en_juego',1);
+    }
 }
