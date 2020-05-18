@@ -110,6 +110,9 @@ export default function PanelTeam(props){
         console.log(props.team);
         if (props.team.inscripto_torneo != null) {
             if(!props.team.infoTorneo.en_juego){
+                if (props.team.infoTorneo.finalizado) {
+                    return 
+                }
                 
                 return (
                     <Grid
@@ -223,7 +226,7 @@ export default function PanelTeam(props){
 
             </Grid>
             <Grid item sm={8}>
-                {renderPanelTorneo()}
+                {/*renderPanelTorneo()*/}
                 <PanelIntegrantes isLider={props.isLider} team={team} />
             </Grid>
         </Grid>

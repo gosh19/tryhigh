@@ -41,7 +41,40 @@ const CajaVersus = (llave) => {
                 setTeam2({...team2, sigla:llave.team2.sigla});
             }
         }
-    },[])
+    },[]);
+    
+    if (llave.ronda == 4) { //FINAL
+        return( 
+            <Grid 
+                container
+                justify="center"
+                className={classes.cajaVersus}
+            >
+                <Grid item xs={4}>
+                    <Grid container justify="center">
+                        <Grid item>
+                            Ganador:
+                        </Grid>
+                    </Grid> 
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container justify="flex-end" direction="row">
+                        <Grid item>
+                            {llave.team1.nombre}
+                        </Grid>
+                        <Grid item>
+                            <img width="50px" src={team1.logo} alt="" srcset=""/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <img width="100%" src="/images/copa.png" alt="" srcset=""/>
+                </Grid>
+            </Grid>
+
+        );
+    }
+
     return(
         <Grid 
             container
@@ -90,10 +123,21 @@ function TorneoActivo(props) {
             if (llaves.length != 0) {
                 const renderRonda = llaves.map((llave, index) => {
                      const caja =  CajaVersus(llave);
-                     return (<div>{caja}</div>);
+                     return (<Grid item style={{width:'80%'}}>{caja}</Grid>);
                  })
      
-                 return renderRonda;
+                 return (
+                    <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                    style={{height:'100%'}}
+                    >
+
+                     {renderRonda}
+                    </Grid>
+                     );
                 
             }else{
                 const cantLlaves = torneo.cant_llaves / (Math.pow(2, (ronda-1)));
@@ -111,7 +155,6 @@ function TorneoActivo(props) {
                             </Grid>
                     );
                 })
-                console.log(llavesVacias);
                 
                 return (
                     <Grid

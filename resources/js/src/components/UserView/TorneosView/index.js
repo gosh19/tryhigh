@@ -1,5 +1,6 @@
 import React from 'react';
 import TorneoActivo from './TorneoActivo';
+import { Button } from '@material-ui/core';
 
 class TorneosView extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class TorneosView extends React.Component {
         this.getTorneos();
     }
 
+
     renderTorneos(){
         if ( this.state.torneos.length == 0) {
             return <h1>no hay cabida</h1>//ACA PONER AVISO DE Q NO HAY NADA PARA MOSTRAR
@@ -50,6 +52,7 @@ class TorneosView extends React.Component {
                     backgroundSize: 'cover',
                 }}
             >
+                <Button onClick={()=> this.getTorneos()}>Actualizar</Button>
                 {this.renderTorneos()}
             </div>
         );

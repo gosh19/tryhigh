@@ -64,6 +64,9 @@ Route::middleware('admin')->group(function(){
         return view('Admin.AdminView');
     });
     Route::get('/admin', 'AdminController@index');
+
+    /**GESTION TORNEO ROUTE */
+    Route::get('/Torneo/set-winner-llave/{llave_id}/{winner}', 'TorneoController@selectWinnerLlave');
 });
 
 Route::get('/a' , 'HomeController@test');

@@ -27,20 +27,24 @@
                                         Cantidad de llaves: {{$torneo->cant_llaves}}
                                     </div>
                                     <div class="col-6">
-                                        Inscriptos: 
+                                        @if (count($torneo->llavesEnJuego) != 0)
+                                        Inscriptos:                                           
                                         @foreach ($torneo->llavesEnJuego as $llave)
                                         <h5>Ronda: {{$llave->ronda}}</h5>
-                                        <div class="d-flex">
-
-                                            <p>{{$llave->team1->nombre ?? 'Aun no inscripto'}} --- </p>
-                                            <p>{{$llave->team2->nombre ?? 'Aun no inscripto'}}</p>
+                                        <div class="d-flex">                                                
+                                            <a class="btn btn-success" href="/Torneo/set-winner-llave/{{$llave->id}}/{{$llave->Team1}}">{{$llave->team1->nombre ?? 'Aun no inscripto'}}</a>
+                                            <a class="btn btn-success" href="/Torneo/set-winner-llave/{{$llave->id}}/{{$llave->Team2}}">{{$llave->team2->nombre ?? 'Aun no inscripto'}}</a>
                                         </div>
                                         @endforeach
+                                        @else
+                                        Ganador: {{$torneo->getWinner($torneo->rondaFinal)->nombre}}
+                                        @endif
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">Abierto: {{$torneo->abierto? 'SI':'NO'}}</li>
                             <li class="list-group-item">En juego: {{$torneo->en_juego? 'SI':'NO'}}</li>
+                            <li class="list-group-item">Finalizado: {{$torneo->finalizado? 'SI':'NO'}}</li>
                         </ul>
                     </div>
                 </div>

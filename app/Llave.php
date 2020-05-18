@@ -18,4 +18,8 @@ class Llave extends Model
     {
         return $this->belongsTo('App\TeamLol', 'Team2', 'id');
     }
+    public function torneo()
+    {
+        return $this->belongsTo('App\Torneo', 'torneo_lol_id','id');
+    }
 }
