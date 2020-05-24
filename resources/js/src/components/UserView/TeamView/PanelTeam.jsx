@@ -107,7 +107,6 @@ export default function PanelTeam(props){
     const [team, SetTeam] = React.useState(props.team);
 
     const renderPanelTorneo = () => {
-        console.log(props.team);
         if (props.team.inscripto_torneo != null) {
             if(!props.team.infoTorneo.en_juego){
                 if (props.team.infoTorneo.finalizado) {
@@ -161,6 +160,13 @@ export default function PanelTeam(props){
     }
 
     const renderButtonAndInvitations = (value) =>{
+
+        if (props.team.inscripto_torneo != null) {  //SI ESTA EN UN TORNEO EN JUEGO NO PUEDE ELIMINAR SU TEAM
+            if(props.team.infoTorneo.en_juego){
+                return null;
+            }
+        }
+
         if (value) {
           return  (
             <Grid
@@ -275,7 +281,21 @@ function NombreTeam(props){
         })
     }
 
-    if(!props.isLider){
+    if (props.team.inscripto_torneo != null) {
+        if(props.team.infoTorneo.en_juego){
+            return(
+                <Grid
+                    container
+                    justify='space-between'
+                    className={classes.nombreTeam}
+                >
+                    <h3 > {team.nombre}  </h3>
+                </Grid>
+            );
+        }
+    }
+
+    if((!props.isLider)){
         return(
             <Grid
                 container
@@ -312,6 +332,7 @@ function NombreTeam(props){
     }else if(loading){
         return <CircularProgress />
     }
+    
     return (
             <Grid
                 container

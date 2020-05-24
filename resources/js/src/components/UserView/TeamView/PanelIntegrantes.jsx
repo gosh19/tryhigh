@@ -46,13 +46,19 @@ export default function PanelIntegrantes(props){
  
         if (integrantes.length != 0) {
             let render = new Array();
+            let value = props.isLider;
+            if (props.team.inscripto_torneo != null) {  //SI ESTA EN UN TORNEO EN JUEGO NO PUEDE ELIMINAR SU TEAM
+                if(props.team.infoTorneo.en_juego){
+                    value = false;
+                }
+            }
             for (let index = 0; index < 5; index++) {
                 if (integrantes[index] != null) {
                     
-                    render.push(<Integrante key={index} liderView={props.isLider} integrante={integrantes[index]}/>);
+                    render.push(<Integrante key={index} liderView={value} integrante={integrantes[index]}/>);
                 }else{
 
-                    render.push(<Integrante key={index} liderView={props.isLider} integrante={null}/>);
+                    render.push(<Integrante key={index} liderView={value} integrante={null}/>);
                 }
             }
             return <h1>{render} </h1>;
